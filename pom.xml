@@ -16,48 +16,7 @@
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-generator-annprocess</artifactId>
             <version>1.27</version>
-        </dependency>        <!--
-        <dependency>
-            <groupId>javax.measure</groupId>
-            <artifactId>unit-api</artifactId>
-            <version>2.1.2</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
-        -->  
-        <!--
-        <dependency>
-            <groupId>systems.uom</groupId>
-            <artifactId>systems-ucum</artifactId>
-            <version>2.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>systems.uom</groupId>
-            <artifactId>systems-quantity</artifactId>
-            <version>2.0.2</version>
-        </dependency>
-               
-        <dependency>
-            <groupId>systems.uom</groupId>
-            <artifactId>systems-common</artifactId>
-            <version>2.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>systems.uom</groupId>
-            <artifactId>systems-unicode</artifactId>
-            <version>2.0.2</version>
-        </dependency>
-        -->
-
-        <!-- https://mvnrepository.com/artifact/tec.uom.lib/uom-lib-common -->
-        <!--
-            <dependency>
-                <groupId>tec.uom.lib</groupId>
-                <artifactId>uom-lib-common</artifactId>
-                <version>2.1</version>
-            </dependency>
-        -->
-
         <!-- tag::dependency[] -->
         <dependency>
             <groupId>tech.units</groupId>
@@ -100,14 +59,6 @@
     <build>
        
         <resources>
-            <!--
-            <resource>
-                <directory>resources</directory>
-                <includes>
-                    <include>**/*.*</include>
-                </includes>
-            </resource>
--->
         </resources>
                
         <plugins>
@@ -161,12 +112,6 @@
                         </goals>
                         <configuration>
                             <resources>
-                                <!--
-                                <resource>
-                                    <directory>.</directory>
-                                    <exclude>**/*.*</exclude>                                      
-                                </resource>
-                               -->
                             </resources>
                             <attributes>
                                 <toc>left</toc>
@@ -185,8 +130,7 @@
                             <sectnums>true</sectnums>
                             <attributes>
                                 <title-page></title-page>
-                                <front-cover-image>image:${project.basedir}/resources/cover.jpg[]</front-cover-image> image:front-cover.pdf[]
-                                 <!-- title-page-background-image>${project.basedir}/resources/cover.jpg[]</title-page-background-image-->
+                                <front-cover-image>image:${project.basedir}/resources/cover.jpg[]</front-cover-image>F
                             </attributes>
                         </configuration>   
                     </execution>

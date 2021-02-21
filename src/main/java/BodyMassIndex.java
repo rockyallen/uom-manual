@@ -5,6 +5,7 @@ import javax.measure.Unit;
 import javax.measure.quantity.Length;
 import javax.measure.quantity.Mass;
 import tech.units.indriya.ComparableQuantity;
+import tech.units.indriya.format.SimpleUnitFormat;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.AlternateUnit;
 import tech.units.indriya.unit.Units;
@@ -14,47 +15,58 @@ import static tech.units.indriya.unit.Units.METRE;
 
 /**
  * Measure of human body shape. 18.5 to 24.9 is considered ideal for health.
+ * Over 30 is obese.
  */
 public class BodyMassIndex {
 
     /**
-     * Create a new Quantity type for the Bmi_unit
+     * Define a new Quantity type for the Bmi_unit
      */
-    //tag::newQuantityTypeInterface[]
-    public interface Bmi extends Quantity<Bmi> {
-    }
-    //end::newQuantityTypeInterface[]
+    public interface Bmi extends Quantity<Bmi> {}
     /**
      * Unit to represent BMI, and attach it to the Quantity type
      */
-    // tag::bmi[]
-    public static final Unit<Bmi> bmi_unit = new AlternateUnit<Bmi>(Units.KILOGRAM.divide(Units.METRE.pow(2)), "BMI");
+    public static final Unit<Bmi> bmi_unit = 
+            new AlternateUnit<Bmi>(Units.KILOGRAM.divide(Units.METRE.pow(2)), "BMI");
 
+    // Register the symbol with the parser so that it knows how to convert string 
+    static {
+       SimpleUnitFormat.getInstance().label(bmi_unit, "BMI");        
+    }
+    
     /**
-     * Useful constants
+     * Provide some useful constants
      */
-    public static final Quantity<Bmi> OVERWEIGHT = Quantities.getQuantity(24.9, bmi_unit);
-    public static final Quantity<Bmi> UNDERWEIGHT = Quantities.getQuantity(18.5, bmi_unit);
-    public static final Quantity<Bmi> OBESE = Quantities.getQuantity(30.0, bmi_unit);
+    public static final Quantity<Bmi> OVERWEIGHT 
+            = Quantities.getQuantity(24.9, bmi_unit);
+    
+    public static final Quantity<Bmi> UNDERWEIGHT 
+            = Quantities.getQuantity(18.5, bmi_unit);
+    
+    public static final Quantity<Bmi> OBESE 
+            = Quantities.getQuantity(30.0, bmi_unit);
 
     /**
      * Utility method to create one. Note the return type is ComparableQuantity
      * because I expect to use it for comparisons. How can I get rid of the
      * cast?
      */
-    public static ComparableQuantity<Bmi> bmi(Quantity<Mass> mass, Quantity<Length> height) {
-
-        return (ComparableQuantity) mass.divide(height).divide(height).asType(Bmi.class).to(bmi_unit);
+    public static ComparableQuantity<Bmi> bmi(Quantity<Mass> mass, 
+            Quantity<Length> height) {
+        
+        return (ComparableQuantity) mass.divide(height).divide(height)
+                .asType(Bmi.class).to(bmi_unit);
     }
 
     /**
      * Demonstrate its properties
      */
     public static void main(String[] args) {
-        
+
         // 1. Create one directly from measurements
-        final Quantity<Mass> mass = Quantities.getQuantity("75 kg").asType(Mass.class);
-        final Quantity<Length> height = Quantities.getQuantity("1.80 m").asType(Length.class);
+        Quantity<Mass> mass = Quantities.getQuantity("75 kg").asType(Mass.class);
+        Quantity<Length> height = 
+                Quantities.getQuantity("1.80 m").asType(Length.class);
         
         Quantity<Bmi> bmi1 = mass.divide(height).divide(height).asType(Bmi.class);
         System.out.println(bmi1); // 23.14814814814814814814814814814815 BMI
@@ -67,20 +79,32 @@ public class BodyMassIndex {
         Quantity<Bmi> bmi3 = bmi(mass.to(GRAM), height.to(KILO(METRE)));
         System.out.println(bmi3); // 23.14814814814814814814814814814815 BMI
         
-        // 4. Create one by parsing // FIXME
-        //Quantity<Bmi> bmi4 = Quantities.getQuantity("27.6 BMI").asType(Bmi.class);
-        //System.out.println(bmi4);
+        // 4. Create one by parsing
+        Quantity<Bmi> bmi4 = Quantities.getQuantity("27.6 BMI").asType(Bmi.class);
+        System.out.println(bmi4); // 27.6 BMI
 
-        // 5. Show that the quantity type works
+        // 5. Show that the quantity type works to prevent mismatches
+        Quantity<Bmi> bmi5 = null;
         try {
-            Quantity<Bmi> bmi5 = Quantities.getQuantity(50, KILOGRAM).asType(Bmi.class);
+            bmi5 = 
+                Quantities.getQuantity(50, KILOGRAM).asType(Bmi.class);
             System.out.println("WRONG " + bmi5); // 50 kg !???
         } catch (java.lang.ClassCastException ex) {
-            System.out.println(ex); // Expect java.lang.ClassCastException: The unit: kg/m² is not compatible with quantities of type interface javax.measure.quantity.Length
+        // Expect java.lang.ClassCastException: The unit: kg/m² is not compatible with quantities of type interface javax.measure.quantity.Length
+            System.out.println(ex); 
+        }
+        // but this corrrectly spots the error
+        try {
+            bmi5.to(bmi_unit);
+        }
+        catch (javax.measure.UnconvertibleException ex)
+        {
+            System.out.println("Success");
         }
         
         // 6. Use it in an application
-        checkMyBmi(mass, height); // Your BMI is 23.148... BMI: You are a healthy weight
+        checkMyBmi(mass, height); 
+        // Prints "Your BMI is 23.148... BMI: You are a healthy weight"
     }
 
     /**
