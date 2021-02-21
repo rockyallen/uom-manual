@@ -1,0 +1,61 @@
+
+[[sect-quantitytypes]]
+== Quantity types
+
+=== Basics
+
+Quantity type is just a marker interface for any property that you want:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="newQuantityTypeInterface"]
+----
+
+???????
+
+- Dont think this is true, but I don't understand it yet.
+
+- This passes and shouldn't:
+
+        Quantity<Bmi> bmi5 = Quantities.getQuantity(50, KILOGRAM).asType(Bmi.class);
+        System.out.println(bmi5); // 50 kg !???
+
+-But this shows that asType does do something with the predefined types:
+
+        try{
+        Quantity<Length> xordinate = Quantities.getQuantity(3000, WATT).asType(Length.class);
+        }
+        catch (java.lang.ClassCastException e)
+        {
+            System.out.println(e);  // java.lang.ClassCastException: The unit: W is not compatible with quantities of type interface javax.measure.quantity.Length
+        }
+
+- Even if I make Bmi implement instead of extend, none of its methods get called.
+Where am I gouing wrong?
+
+In {product} there is a 1-to-many relationship between Quantity type and units (xref:appendix-predefinedunits[]) but this is not required and is not enforced.
+
+- Sounds wrong. 
+Further research required
+
+=== Custom Quantity types
+
+A Quantity must have a Quantity type if you want to use it in add or subtract arithmetic.
+One use of custom quantity types is to label otherwise anonymous Quantitys so that you can do arithmetic with them:
+
+[source,java]
+----
+include::{basedir}/src/main/java/BodyMassIndex.java[tag="newQuantityType"]
+----
+
+It can also be used to distinguish properties that should not be mixed, but that unfortunately have the same dimensions:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="newQuantityTypeInterfaceAlias"]
+----
+
+[NOTE]
+This violates the 1-to-many relationship above; should it be discouraged? Is there a better way?
+
+

@@ -1,0 +1,117 @@
+
+[[sect-jscience]]
+== Converting from JScience
+
+// - Taken verbatim from https://schneide.blog/tag/indriya/ because I know nothing
+
+=== Using quantities
+
+Here’s a simple use of a physical quantity with JScience, in this example Length:
+
+[source,java]
+----
+import org.jscience.physics.amount.Amount;
+ 
+import javax.measure.quantity.Length;
+ 
+import static javax.measure.unit.SI.*;
+ 
+// ...
+ 
+final Amount<Length> d = Amount.valueOf(214, CENTI(METRE));
+final double d_metre = d.doubleValue(METRE);
+----
+
+And here’s the equivalent code using Units API 2.0 and Indriya:
+
+[source,java]
+----
+import tech.units.indriya.quantity.Quantities;
+ 
+import javax.measure.Quantity;
+import javax.measure.quantity.Length;
+ 
+import static javax.measure.MetricPrefix.CENTI;
+import static tech.units.indriya.unit.Units.METRE;
+ 
+// ...
+ 
+final Quantity<Length> d = Quantities.getQuantity(214, CENTI(METRE));
+final double d_metre = d.to(METRE).getValue().doubleValue();
+----
+
+=== Consistency
+
+While JScience also defines aliases with alternative spellings like METER and constants for many prefixed units like CENTIMETER or MILLIMETER, Indriya encourages consistency and only allows METRE, CENTI(METRE), MILLI(METRE).
+
+=== Quantity names
+Most quantities have the same names in both projects, but there are some differences:
+
+Amount<Duration> becomes Quantity<Time>
+
+Amount<Velocity> becomes Quantity<Speed>
+
+In these cases Unit API uses the correct SI names, i.e. time and speed. 
+Wikipedia explains the difference between speed and velocity.
+
+=== Arithmetic operations
+
+The method names for the elementary arithmetic operations have changed:
+
+plus() becomes add()
+
+minus() becomes subtract()
+
+times() becomes multiply()
+
+Only the method name for division is the same:
+
+divide() is still divide()
+
+However, the runtime exceptions thrown on division by zero are different:
+
+JScience: java.lang.ArithmeticException: / by zero
+
+Indriya: java.lang.IllegalArgumentException: cannot initalize a rational number with divisor equal to ZERO
+
+=== Type hints
+
+If you divide or multiply two quantities the Java type system needs a type hint, because it doesn’t know the resulting quantity. 
+Here’s how this looks in JScience versus Unit API:
+
+With JScience:
+
+[source,java]
+----
+Amount<Area> a = Amount.valueOf(100, SQUARE_METRE);
+Amount<Length> b = Amount.valueOf(10, METRE);
+Amount<Length> c = a.divide(b).to(METRE);
+----
+
+With Unit API:
+
+[source,java]
+----
+Quantity<Area> a = Quantities.getQuantity(100, SQUARE_METRE);
+Quantity<Length> b = Quantities.getQuantity(10, METRE);
+Quantity<Length> c = a.divide(b).asType(Length.class);
+----
+
+=== Comparing quantities
+
+If you want to compare quantities via compareTo(), isLessThan(), etc. you need quantities of type ComparableQuantity. 
+The Quantities.getQuantity() factory method returns a ComparableQuantity, which is a sub-interface of Quantity.
+
+=== Defining custom units
+
+Defining custom units is very similar to JScience. 
+Here’s an example for degree (angle), which is not an SI unit:
+
+[source,java]
+----
+public static final Unit<Angle> DEGREE_ANGLE =
+    new TransformedUnit<>("°", RADIAN,
+        MultiplyConverter.ofPiExponent(1).concatenate(MultiplyConverter.ofRational(1, 180)));
+----
+
+

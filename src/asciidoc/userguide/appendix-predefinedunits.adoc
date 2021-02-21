@@ -1,0 +1,101 @@
+
+[[appendix-predefinedunits]]
+[appendix]
+== List of Predefined Units
+
+// - I think that Imperialunits are in systems.uom.ucum.UCUM in systems-common.jar but I get class not found: MeasurementError when I include it
+
+These SI units are available in package ++tech.units.indriya.unit.Units++.
+Units that are required by the JSR have the Unit constant in CAPITALS.
+Unit constants in lower case are provided in {product} but may not exist in other implementations.
+
+[options="header",cols="^*4"]
+|===
+
+|Quantity type |Dimensions |Unit constant |Symbol |Note
+
+|Acceleration |L·T^-2^ |METRES_PER_SQUARE_SECOND |m/s2 |
+
+|AmountOfSubstance |- |MOLE |mol |Base SI unit
+
+|Angle |- |RADIAN |rad |
+
+|Area |L^2^ |SQUARE_METRE |m2 |
+
+|CatalyticActivity |[N]/[T] |KATAL |kat |
+
+.2+|Dimensionless .2+|- |ONE |1 |
+|Percent |% |
+
+|ElectricCapacitance |T^4^·I^2^·L^-2^·M^-1^ |FARAD |F |
+
+|ElectricCharge | T·I |COULOMB |C |
+
+|ElectricConductance |I^2^·T^3^·L^-2^·M^-1^ |SIEMENS |S |
+
+|ElectricCurrent |I |AMPERE |A |Base SI unit
+
+|ElectricInductance |L^2^·M·T^-2^·I^-2^ |HENRY |H |
+
+|ElectricPermittivity |T^4^·I^2^·L^-2^·M^-2^ |FARAD_PER_METRE |F/m |
+
+|ElectricPotential |L^2^·M·T^-3^·I^-1^ |VOLT |V |
+
+|ElectricResistance |L^2^·M·T^-3^·I^-2^ |OHM |Ω |
+
+|Energy |M·L^2^·T^-2^  |JOULE |J |
+
+|Force |M·L·T^-2^ |NEWTON |N |
+
+|Frequency |T^-1^ |HERTZ |Hz |
+
+|Illuminance |J/L² |LUX |lx |
+
+|Length |M |METRE |m |Base SI unit
+
+|LuminousFlux |J |LUMEN |lm |
+
+|LuminousIntensity |J |CANDELA |cd |Base SI unit
+
+|MagneticFieldStrength |I·L^-1^ |AMPERE_PER_METRE |A/m |
+
+|MagneticFlux |L^2^·M·T^-2^·I^-1^ |WEBER |Wb |
+
+|MagneticFluxDensity |M·T^-2^·I^-1^ |TESLA |T |
+
+.2+|Mass .2+|M |KILOGRAM |kg |Base SI unit
+
+|Gram |g |SI, non-preferred
+
+|Power |L^2^·M·T^-3^ |WATT |W |
+
+|Pressure |M·L^-1^·T^-2^ |PASCAL |Pa |
+
+|RadiationDoseAbsorbed |L^2^·T^-2^  |GRAY |Gy |
+
+|RadiationDoseEffective |L^2^·T^-2^ |SIEVERT |Sv |
+
+|Radioactivity |T^-1^ |BECQUEREL |Bq |
+
+|SolidAngle |- |STERADIAN |sr |
+
+|Speed |L·T^-1^ |METRES_PER_SECOND |m/s |
+
+.2+|Temperature .2+|Θ |KELVIN |K |Base SI unit
+
+|Celsius |{deg}C |SI, non-preferred
+
+.7+|Time .7+|T |SECOND |s |Base SI unit
+
+| Minute | min |Non-SI 
+| Hour | h | Non-SI
+| day | d | Non-SI
+| Month | mo | Non-SI
+| Week | wk | Non-SI
+| Year | y | Non-SI
+
+.2+|Volume .2+|L^3^ |CUBIC_METRE |m3 |
+| Litre | l |SI, non-preferred
+
+|===
+

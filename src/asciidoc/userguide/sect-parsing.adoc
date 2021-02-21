@@ -1,0 +1,18 @@
+
+[[sect-parsing]]
+== Parsing
+
+UnitFormat classes are responsible for converting units to and from String forms.
+QuantityFormat classes do the same for Quantitys.
+There is a large variety of classes available to encompass just about any format you might need; however the SimpleUnitFormat and SimpleQuantityFormat classes covers most cases for SI units.
+Since SimpleQuantityFormat includes a SimpleUnitFormat to deal with the unit part is is convenient to only describe SimpleQuantityFormat.
+
+SimpleUnitFormat can interpret unit symbols, compound units and SI prefixes.
+For example:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="simpleformat"]
+----
+
+

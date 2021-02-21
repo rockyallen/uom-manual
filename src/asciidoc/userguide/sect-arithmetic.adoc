@@ -1,0 +1,104 @@
+
+[[sect-arithmetic]]
+== Arithmetic
+
+////
+- Check the distributive stuff. Exactly what does it mean?
+
+- Include lots of examples of real-world usage and use only the recommended idioms.
+This is going to be the main cut-and-paste resource for users.
+////
+
+=== Basic operations
+
+You can do the normal arithmetic operations on Quantitys (add/subtract/divide/multiply, and mutiply/divide by a number), and be sure that the resulting units and values are consistent.
+For example, an addition:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="mixedCompatibleUnits"]
+----
+
+And a multiplication:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="multiplyresult"]
+----
+
+Note how the units are calculated:
+
+- The units of the add and subtract result is always the unit of left operand of the first operation carried out.
+
+- Similarly, the units of the multiply and divide result is assembled from the operands, in the order in which the operations are carried out.
+
+The methods are associative and commutative and distributive just as the normal arithmetic operations are:
+
+  A.add(B) = B.add(A)
+  A.multiply(B) = B.multiply(A)
+  A.add(B.add(C)) = (A.add(B)).add(C)
+  A.multiply(B.add(C)) = (A.multiply(B)).add(A.multiply(C))
+
+providing that "=" is understood as _equivalence_ rather than _equality_ (xref:sect-terminology[]).
+
+The Quantity Type of a multiply or divide is anonymous (hence the Quantity<?>).
+Also the unit has the correct dimensions, but may not be in the form you want.
+You can (should) specify the Quantity Type, and adjust the units to the traditional form if one exists:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="multiplyresultcast"]
+----
+
+- The .asType() is a hint to the compiler so that it can assign the correct type.
+
+- The to() method converts to your preferred Unit.
+
+Both methods throw a runtime Exception if the dimensions of the Quantity do not match the dimensions of the argument.
+This is a useful check and should be included if possible.
+
+[[temperaturesums]]
+=== Quirks
+
+// - Funnies and why they happen and how to deal with them
+
+// - Addition/increment distinction
+
+The methods are mathematically correct, but this can lead to surprising results, particularly with shifted units ({issue}/17[issue #17]).
+For example, you might expect 2{deg}C + 3{deg}C to be 5{deg}C, but when you try it the result is 278.15{deg}C:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="temperaturesumswrong"]
+----
+
+This is because the quantities are (conceptually) converted to base units first, then added, then converted back to the input units:
+
+[subs=attributes]
+----
+2{deg}C + 3{deg}C = 275.15 K + 276.15 K = 557.3 K = 278.15{deg}C
+----
+
+Rather than adding, you probably intended to *increment* 2{deg}C by a further 3{deg}C.
+{product} does not provide an increment method, but instead, you could use:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="temperaturesumsright"]
+----
+
+=== Equations
+
+// Using quantities in formulas - recommend idiom ie
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="einstein"]
+----
+
+////
+- This actually negates the benefits. 
+Is there a better way?
+////
+
+

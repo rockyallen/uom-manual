@@ -1,0 +1,43 @@
+
+[[sect-gettingstarted]]
+== Getting Started with {product}
+
+In this chapter, we'll explain how to set up a simple Maven project and create your first quantity. 
+Once you've done that, you're all set to explore the rest of the functionality of {product}.
+
+=== Setting Up Your Maven Project
+
+In order to be able to use {product}, you first have to set up your Maven project correctly. 
+Assuming you have a working POM file, all you should need to do is to add the following dependency to your project:
+
+[source,xml]
+----
+include::{basedir}/pom.xml[tag="dependency"]
+----
+
+=== Your First Quantity
+
+Next, we'll create a Java class that will create your first quantity, the speed of light (_c_). 
+Let's start by creating a new class in a package of your choice. 
+In that class, import the following types in order to create a new speed quantity:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Minimal.java[tag="import"]
+----
+
+In order to keep things simple, we'll create the quantity in the class's `main` method, and print it out immediately.
+
+[source,java]
+----
+include::{basedir}/src/main/java/Minimal.java[tag="main"]
+----
+
+Compile the class, and run it as a stand-alone Java application. The result should be like this:
+
+----
+The speed of light: 1079252849 km/h
+----
+
+That's it: you've just included {product} as a dependency to a project, and created and printed out your first quantity!
+

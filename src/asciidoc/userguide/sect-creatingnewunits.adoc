@@ -1,0 +1,101 @@
+
+[[sect-creatingnewunits]]
+== Creating new Units
+
+////
+- Why?
+
+- How?
+
+- What can you do with them?
+
+- Are they exactly the same as built-ins?
+
+- What are the advantages/use cases of each method?
+
+- Can I create new Quantity Types?
+
+- Lots of examples
+////
+
+There are several methods for creating derived units, each with its own uses and advantages:
+
+- SI prefixes
+
+- Scaling a single Unit
+
+- Combining multiple units
+
+- Implicitly
+
+- Parsing
+
+All user-defined units have exactly the same abilities as the built-in units.
+for example, after you have defined a unit, it automatically becomes available to the parser.
+
+- Prove it!
+
+=== SI Prefixes
+
+// This is a very common use case.
+
+Only the un-prefixed units are provided in the library.
+Create others as you need them:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="siprefixes"]
+----
+
+Or if you only want them occasionally, use them anonymously (but see xref:sect-performance[]):
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="siprefixesdirect"]
+----
+
+=== Scaling from existing Units
+
+AlternateUnit makes a new unit by applying linear scaling to an existing one.
+The new unit has the same dimensions, but a different symbol and scale.
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="alternateUnit"]
+----
+
+=== Combining multiple Units
+
+ProductUnit makes a new unit created as the product of rational powers of other units.
+The new unit has dimensions calculated from the combination of the other units.
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="productUnit"]
+----
+
+=== Implicitly
+
+You can use the fact that arithmetic operations manage units for you:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="implicitunits"]
+----
+
+- Is there a use for this?
+
+=== Parsing
+
+TBD
+
+=== Defining from scratch?
+
+////
+(if that means anything)
+
+- What does Unit<?> mean and is it a good idea?
+////
+
+TBD
+

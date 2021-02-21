@@ -1,0 +1,102 @@
+
+[[sect-intro]]
+== Introduction
+
+=== Purpose
+
+////
+- What is is for?
+
+- Relationship to JSR-385 JSR-363, JSR-275, javax.measure library, JScience
+
+- Implementation vs specification. 
+
+- Other implementations?
+
+- Other JVM languages.
+
+- Directed at engineers and scientists who are not expert programmers but who already understand units and dimensions.
+
+- Covers using {product} directly as a library.
+Does not cover using it as a service (cos I don't understand it!)
+////
+
+{product} lets you write programs using dimensioned quantities instead of primitives (doubles).
+It is aimed at engineers, scientists and data-processors who need to write correct programs that manipulate physical units.
+
+Advantages:
+
+- Saves development time.
+
+- Makes your code more readable.
+
+- Reduce errors.
+
+- Catches more coding errors at compile time, for example adding a length to an area.
+
+- Makes your libraries independent of the system of units. 
+
+- You don't have to worry about what units your clients want to use, or finding conversion factors.
+
+- More?
+
+{product} is the reference implementation of JSR-385 which defines a framework for handling quantities using arbitrary systems of units.
+However this document concentrates on using {product} as a simple library.
+
+JSR-385 is the latest development of the units framework started with JScience and JSR-275, so it is simple to adapt programs originally coded with JScience.
+
+=== Downloading
+
+// - Table of required jars, where to get updates, status.
+
+All required jars are held in Maven Central {maven}.
+
+You can get them individually, or through a Maven POM.
+
+Versions are correct at the time of writing-check Maven for the latest version.
+
+[options="header",cols="^^^^^"]
+|===
+|Artifact |Purpose |Current version |Jar
+
+|javax.measure/unit-api 
+|Interfaces from JSR-385 (required)
+|2.1.2 
+|{maven}/javax.measure/unit-api/2.1.2[unit-api-2.1.2.jar]
+
+|tech.units/indriya 
+|Implementation of JSR-385 (required) 
+|2.1.1 
+|{maven}/tech.units/indriya/2.1.1[indriya-2.1.1.jar]
+
+|tech.units/uom-lib-common 
+|Utility library (required) 
+|2.1 
+|{maven}/tech.uom.lib/uom-lib-common/2.1[uom-lib-common-2.1.jar]
+
+|systems.uom/systems-common 
+|Non-SI units (optional) 
+|2.0.2 
+|{maven}/systems.uom/systems-common/2.0.2[systems-common-2.0.2.jar]
+
+|systems.uom/systems-quantity 
+|Rare Non-SI units (optional) 
+|2.0.2 
+|{maven}/systems.uom/systems-quantity/2.0.2[systems-quantity-2.0.2.jar]
+
+|===
+
+=== Resources
+
+The project home page is at: https://unitsofmeasurement.github.io/indriya
+
+The Gitter page for questions is: https://gitter.im/unitsofmeasurement/indriya
+
+The project source is in GitHub: https://github.com/unitsofmeasurement/indriya
+
+The library Javadoc is published at: https://javadoc.io/doc/tech.units/indriya/latest/overview-summary.html
+
+You can read the JSR at: https://jcp.org/en/jsr/detail?id=385
+
+SI units are controlled by the BIPM. 
+Their website is at: https://www.bipm.org/en/about-us/

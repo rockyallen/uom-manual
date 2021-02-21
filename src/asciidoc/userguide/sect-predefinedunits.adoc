@@ -1,0 +1,28 @@
+
+[[sect-predefinedunits]]
+== Predefined Units
+
+////
+- Discussion of built-in units; where they are, how to list them. 
+
+- Are they in the spec or the implementation?
+
+- SystemOfUnits what is is for?
+
+- SI
+
+- Imperial - where to get them if they are not provided
+
+- Mixing units from different libraries
+
+////
+
+Normally you will use the predefined constants in the Units class explicitly:
+See also table at xref:appendix-predefinedunits[].
+If these are not enough, you can create derived units by various methods (xref:sect-creatingnewunits[]).
+
+{product} does not contain Imperial or any other system of units.
+However they are provided by other libraries and can be freely mixed with the ones in {product}, but this is beyond the scope of this document.
+(very weak-links to how?)
+
+

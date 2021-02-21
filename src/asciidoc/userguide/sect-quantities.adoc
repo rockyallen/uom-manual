@@ -1,0 +1,43 @@
+
+[[sect-quantities]]
+== Quantitys
+
+=== Basics
+
+A Quantity has a value, units and dimensions with getter methods for them:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="quantitygetters"]
+----
+
+The value is a Number, so the precision and length of the Quantity is defined by the Number class (Is this true? Expand on implications).
+
+=== Creating Quantitys
+
+The normal method to create a Quantity was illustrated above:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Minimal.java[tag="main"]
+----
+
+Because Quantitys are immutable, arithmetic operations and converters also result in new Quantity objects.
+
+The other way to create quantities is by parsing Strings (xref:sect-parsing[]).
+This is normally only used when reading external input.
+
+- Any others?
+
+=== Methods
+
+arithmetic - see xref:sect-arithmetic[]
+
+  getScale() - TBD
+
+  inverse() - TBD
+
+  negate() - TBD
+
+  toSystemUnit() - TBD
+

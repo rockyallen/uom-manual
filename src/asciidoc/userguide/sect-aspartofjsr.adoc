@@ -1,0 +1,30 @@
+
+[[sect-aspartofjsr]]
+== {product} as part of JSR-365
+
+////
+- I was trying to avoid all the SPI stuff and just treat {product} as a library because it seems really complex and possibly difficult to set up.
+But it may be the only way to do things like use other parsers and other systems of units.
+In which case it may have to be moved up to the getting started section.
+////
+
+{product} is one implementation of JSR-365, and provides a comprehensive set of classes for dealing with SI units. 
+However it does not provide non-SI units or complex formatting.
+To get these facilities you can use the service provided interface contained in the JSR-365 core library.
+
+For example, you can obtain other formatters by name:
+
+[source, java]
+----
+// Get the service
+FormatService formatService = ServiceProvider.current().getFormatService();
+
+// Get the default formatter
+QuantityFormat format = formatService.getQuantityFormat();
+
+// Get a named formatter
+QuantityFormat nsFormat = formatService.getQuantityFormat(“NumberSpace”);
+----
+
+TBD
+

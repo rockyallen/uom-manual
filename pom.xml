@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.mycompany</groupId>
+    <artifactId>uom-manual</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <dependencies>
+        
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>1.27</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>1.27</version>
+        </dependency>        <!--
+        <dependency>
+            <groupId>javax.measure</groupId>
+            <artifactId>unit-api</artifactId>
+            <version>2.1.2</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        -->  
+        <!--
+        <dependency>
+            <groupId>systems.uom</groupId>
+            <artifactId>systems-ucum</artifactId>
+            <version>2.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>systems.uom</groupId>
+            <artifactId>systems-quantity</artifactId>
+            <version>2.0.2</version>
+        </dependency>
+               
+        <dependency>
+            <groupId>systems.uom</groupId>
+            <artifactId>systems-common</artifactId>
+            <version>2.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>systems.uom</groupId>
+            <artifactId>systems-unicode</artifactId>
+            <version>2.0.2</version>
+        </dependency>
+        -->
+
+        <!-- https://mvnrepository.com/artifact/tec.uom.lib/uom-lib-common -->
+        <!--
+            <dependency>
+                <groupId>tec.uom.lib</groupId>
+                <artifactId>uom-lib-common</artifactId>
+                <version>2.1</version>
+            </dependency>
+        -->
+
+        <!-- tag::dependency[] -->
+        <dependency>
+            <groupId>tech.units</groupId>
+            <artifactId>indriya</artifactId>
+            <version>2.1.1</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>        
+        <!-- end::dependency[] -->
+        
+        <!-- POMs don't seem to work in NetBeans Maven. Load them directly. -->
+        <!-- https://bintray.com/asciidoctor/maven/asciidoctorj-api/view/general -->
+        <dependency>
+            <groupId>org.asciidoctor</groupId>
+            <artifactId>asciidoctorj</artifactId>
+            <version>2.4.2</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.6.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.6.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.6.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    
+    <build>
+       
+        <resources>
+            <!--
+            <resource>
+                <directory>resources</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+-->
+        </resources>
+               
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/libs
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>2.1.0</version> 
+                <dependencies>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-pdf</artifactId>
+                        <version>1.5.0-beta.5</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <sourceDirectory>src/asciidoc/userguide</sourceDirectory>
+                    <outputDirectory>target</outputDirectory>
+                    <sourceDocumentName>master.adoc</sourceDocumentName>
+                    <doctype>article</doctype>
+                    <attributes>
+                        <basedir>${project.basedir}</basedir>
+                        <numbered></numbered>
+                    </attributes>
+                </configuration>   
+                <executions>
+                    <execution>
+                        <id>output-html</id>              
+                        <phase>generate-resources</phase> 
+                        <goals>
+                            <goal>process-asciidoc</goal> 
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <!--
+                                <resource>
+                                    <directory>.</directory>
+                                    <exclude>**/*.*</exclude>                                      
+                                </resource>
+                               -->
+                            </resources>
+                            <attributes>
+                                <toc>left</toc>
+                            </attributes>
+                        </configuration>   
+                    </execution>
+                    <execution>
+                        <id>output-pdf</id>              
+                        <phase>generate-resources</phase> 
+                        <goals>
+                            <goal>process-asciidoc</goal> 
+                        </goals>
+                        <configuration>
+                            <backend>pdf</backend>
+                            <doctype>book</doctype>
+                            <sectnums>true</sectnums>
+                            <attributes>
+                                <title-page></title-page>
+                                <front-cover-image>image:${project.basedir}/resources/cover.jpg[]</front-cover-image> image:front-cover.pdf[]
+                                 <!-- title-page-background-image>${project.basedir}/resources/cover.jpg[]</title-page-background-image-->
+                            </attributes>
+                        </configuration>   
+                    </execution>
+                </executions>            
+            </plugin>                       
+        </plugins>
+    </build>
+         
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+    <name>uom-manual</name>
+ 
+</project>

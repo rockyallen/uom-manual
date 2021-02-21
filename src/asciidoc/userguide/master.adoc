@@ -1,0 +1,74 @@
+:version: A
+:numbered:
+:toc: left
+:product: Indriya
+:maven: https://mvnrepository.com/artifact
+:issue: https://github.com/unitsofmeasurement/indriya/issues/
+
+= Units of Measure: User Guide
+
+////
+- Very drafty. 
+The list at the start of each chapter describes what is going to be in it, and will be removed eventually.
+
+- Quantitys (class name) or quantities (normal english)?
+
+- How to write units: with spaces, small spaces or middle dots?
+
+- Should I include systems-quantity-2.0.2.jar? It is not properly part of this project.
+
+- commensurable or commensurate?
+
+- static imports?
+
+- Possible bug: Dimension.getBaseDimensions() contains J, N, I. How are these base units?
+
+For my info:
+
+- Why aren't quantities comparable by default?
+
+TODO:
+
+- Make sure terminology is internally consistent and consistent with the JSR
+
+- Web search for more hints
+
+////
+
+include::sect-intro.adoc[]
+
+include::sect-gettingstarted.adoc[]
+
+include::sect-terminology.adoc[]
+
+include::sect-quantities.adoc[]
+
+include::sect-convertingquantities.adoc[]
+
+include::sect-predefinedunits.adoc[]
+
+include::sect-arithmetic.adoc[]
+
+include::sect-creatingnewunits.adoc[]
+
+include::sect-quantitytypes.adoc[]
+
+include::sect-puttingittogeter.adoc[]
+
+include::sect-formatting.adoc[]
+
+include::sect-parsing.adoc[]
+
+include::sect-objectproperties.adoc[]
+
+include::sect-performance.adoc[]
+
+include::sect-languages.adoc[]
+
+include::sect-aspartofjsr.adoc[]
+
+include::sect-jscience.adoc[]
+
+include::sect-errormessages.adoc[]
+
+include::appendix-predefinedunits.adoc[]

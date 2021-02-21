@@ -1,0 +1,30 @@
+
+[[sect-convertingquantities]]
+== Converting Quantitys
+
+=== to() method
+
+Any Quantity can be converted into an _equivalent_ Quantity in different (but _commensurable_) units using the ++Quantity.to()++ method.
+It results in a new ++Quantity++ Object:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="siprefixes"]
+----
+
+If the units are not commensurable, you will be prevented from doing so with a compile-time error (see xref:sect-errormessages[]).
+
+[[sect-unitconverter]]
+=== Converting primitives
+
+If you have to convert many primitive numbers, the UnitConverter class can do it without creating a new Quantity every time:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="converter"]
+----
+
+This only converts primitives, so is a half-way house between manual conversion and making everything a Quantity.
+It might be useful if the performance hit of Quantity is unacceptable (xref:sect-performance[]).
+
+

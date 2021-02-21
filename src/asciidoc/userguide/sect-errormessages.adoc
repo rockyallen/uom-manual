@@ -1,0 +1,25 @@
+
+[[sect-errormessages]]
+== Error messages
+
+=== Compile time errors
+
+This section provides a list of compiler error messages and likely causes.
+
+Compile time error: Incompatible types::
+  CompareTo() with different dimensions, declared Quantity<Power>
+
+=== Runtime errors
+
+This section provides a list of exceptions and likely causes.
+
+javax.measure.IncommensurableException: K is not compatible with W::
+  CompareTo with different dimensions, undeclared Quantity
+
+UnconvertibleException::
+  +.to()+
+
+java.lang.ClassCastException: The unit: W is not compatible with quantities of type interface javax.measure.quantity.Length::
+  Quantity<Length> xordinate = Quantities.getQuantity(3000, WATT).asType(Length.class);
+
+

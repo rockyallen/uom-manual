@@ -1,0 +1,49 @@
+
+[[sect-terminology]]
+== Concepts and terms
+
+// hacked from the wordy definitions in the JSR, hopefully without changing meaning
+// The audience should know this already.
+
+Quantity::
+  A quantitative property or attribute of a thing.
+For example, the temperature of a gas, the volume of a swimming pool, or the brightness of a star.
+A quantity is composed of a numeric value and the unit in which it is measured.
+
+Quantity type::
+  A java class representing a type of physical property without specifying which units it is measured in.
+For example, Length.
+
+Unit::
+  A measurement scale such as metre or Ampere.
+Each quantity type has one or more units in which it can be measured.
+For example a length can be measured in metres, feet or miles.
+
+Base and derived units::
+  In each system of units, an arbitrary set is chosen as the base units, and all the others are defined in terms of them.
+For example in SI the base unit for time is the second. 
+The unit for frequency is a derived unit (1/second).
+This becomes important when you do arithmetic with derived units: the operations are defined on the base unit (xref:temperaturesums[]).
+
+Dimension::
+  One of the fundamental aspects of quantities: length (L), mass (M), time (T), or electrical current (I).
+All quantity types are associated with a combination of dimensions. 
+For example Force has dimensions of M·L·T^-2^.
+Dimensions are largely hidden from the user, but they are important for conversions (see commensurable below)
+
+Commensurable (also known as compatible)::
+  Two units are commensurable (compatible) if they have the same dimensions.
+If they are commensurable, you can freely convert between them.
+If two quantities have commensurable units, you can compare them, and do arithmetic operations on them.
++
+[WARNING]
+Just because 2 quantities have commensurable units does not necessarily mean that it makes physical sense to do arithmetic with them.
+For example, Torque and work done both have the same dimensions so they can be added together, but the result is physically meaningless.
++
+Is this true? needed? best here or elsewhere? Quirks?
+
+Equivalence::
+Two quantities are equivalent if the physical property that they represent is the same even if the units are different.
+For example, 1 FOOT and 0.308 METRE are equivalent but not equal.
+
+

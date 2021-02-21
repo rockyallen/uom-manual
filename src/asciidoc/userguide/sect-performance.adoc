@@ -1,0 +1,136 @@
+
+[[sect-performance]]
+== Performance
+
+////
+- Don't want to be negative, but my first attempt at converting a program in primitives changed 2 seconds run time to nearly 3 minutes.
+Was interactive, now unusable.
+
+- Need to benchmark all suggestions-don't want to cause people work then find it makes no difference.
+////
+
+The advantages of using dimensioned quantities come at a price in speed and storage space.
+UOM has been reported as about 20 times slower than BigDecimal ({issue}298[issue #298], {issue}299[issue #299]).
+
+=== Speed
+
+Provisional benchmark results are:
+
+.Time for arithmetic operations relative to primitive double multiplication
+[options=header]
+|===
+|Class|add|subtract|multiply|divide
+
+|double
+|1.0
+|1.0
+|1.0 (Ref)
+|2.0
+
+|long
+|1.2
+|1.0
+|1.1
+|4.3
+
+|Double
+|1.1
+|1.1
+|1.1
+|1.9
+
+|BigDecimal
+|3.0
+|3.0
+|3.2
+|TBD
+
+|Quantity
+|1923.0
+|1934.0
+|61.7
+|2633.0
+
+|===
+
+.Time for UOM Object operations relative to primitive double multiplication
+[options=header]
+|===
+|Operation |Statement |Time
+
+|Quantity creation
+|getQuantity(97.6, WATT)
+|12.6
+
+|Quantity conversion (same units)
+|quantity.to(KILOWATT)
+|1.2
+
+|Quantity conversion (different units)
+|quantity.to(KILOWATT)
+|3254.0
+
+|New complex unit
+|new TransformedUnit<>("°", RADIAN, MultiplyConverter.ofPiExponent(1).concatenate(MultiplyConverter.ofRational(1, 180)))
+|234.0
+
+|===
+
+Some suggestions for improving speed:
+
+**Avoid unnecessary object creation**
+
+Instances with identical constructor arguments are immutable and functionally identical, so you can define Units and frequently used constants just once:
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="constants"]
+----
+
+**Avoid unnecessary Unit conversion**
+
+Use consistent units.
+For long maths routines, this means creating or converting all quantities to consistent units first using +.to()+.
+
+**Don't use Quantities**
+
+For some tasks, the UnitConverter class can be used to avoid the cost of creating multiple Quantitys (xref:sect-unitconverter[]).
+
+=== Size
+
+.Space requirements comparison
+[options=header]
+|===
+|Class |Instance |Bytes
+
+|double|Any|8
+
+|long|Any|8
+
+|BigDecimal|1923.5|TBD
+
+|Quantity|1923.5 W|TBD
+
+|===
+
+Some suggestions for reducing space:
+
+**Wrap primitive arrays and collections** (memory)
+
+If you have many quantities of the same Unit, you can save space by only storing the Unit once.
+The following class is type-safe in that attempting to set a quantity that is not commensurable with the unit provided in the constructor will cause a run-time exception (+UnconvertibleException+).
+
+[source,java]
+----
+include::{basedir}/src/main/java/DimensionedVector.java[tag="class"]
+----
+
+**Store Quantities as primitives** (serialisation)
+
+Each instance of the +ThermoCoupleReading+ class below serialises as 2 floats, but keeps the type-safety of Quantity.
+
+[source,java]
+----
+include::{basedir}/src/main/java/ThermoCoupleReading.java[tag="class"]
+----
+
