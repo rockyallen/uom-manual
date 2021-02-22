@@ -102,8 +102,11 @@ In numerically intensive code, use Quantities only at the input and output of yo
 ie 
 
 [source,java]
----
-double q_internal ++q_input.toSystemUnits().getValue().doubleValue()++; ...
+----
+method(Quantity<Mass> q_input) {
+double q_internal = q_input.toSystemUnits().getValue().doubleValue(); 
+...
+}
 ----
 
 === Size

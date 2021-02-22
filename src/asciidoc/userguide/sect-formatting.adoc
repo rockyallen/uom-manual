@@ -2,14 +2,22 @@
 [[sect-formatting]]
 == Formatting
 
+[WARNING]
+According to the Javadocs, the parser should be configurable for the number-unit separator and the multiple-radix separators, but I can't get it to work.
+The default <number><space>[prefix]<unit> works OK, so this is all I will describe until I work out what is going on.
+
+Formatting is an exact reversal of parsing.
+See the previous table for examples.
+
+////
 [[sect-formattingunits]]
 === Formatting Units
 
-TBD
+The units a
 
 [[sect-formattingquantities]]
 === Formatting Quantitys
 
 TBD
-
+////
 

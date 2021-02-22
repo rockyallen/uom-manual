@@ -59,7 +59,7 @@ public class BodyMassIndex {
     }
 
     /**
-     * Demonstrate its properties
+     * Test it
      */
     public static void main(String[] args) {
 

@@ -2,17 +2,33 @@
 [[sect-parsing]]
 == Parsing
 
-UnitFormat classes are responsible for converting units to and from String forms.
-QuantityFormat classes do the same for Quantitys.
-There is a large variety of classes available to encompass just about any format you might need; however the SimpleUnitFormat and SimpleQuantityFormat classes covers most cases for SI units.
-Since SimpleQuantityFormat includes a SimpleUnitFormat to deal with the unit part is is convenient to only describe SimpleQuantityFormat.
+[WARNING]
+According to the Javadocs, the parser should be configurable for the number-unit separator and the multiple-radix separators, but I can't get it to work.
+The default <number><space>[prefix]<unit> works OK, so this is all I will describe until I work out what is going on.
 
-SimpleUnitFormat can interpret unit symbols, compound units and SI prefixes.
+[NOTE]
+`SimpleQuantityFormat` contains a number formatter and a `SimpleUnitFormatter` so any description of unit handling in `SimpleQuantityFormat` covers `SimpleUnitFormat` as well.
+
+`SimpleQuantityFormat` can interpret decimal numbers, rational numbers, unit symbols, compound units and SI prefixes.
+
 For example:
 
 [source,java]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="simpleformat"]
 ----
+
+Note that the prefix has no separator between it and the unit, but there must be a full space (not dot, middle dot or small space) between compound units.
+
+If you have defined your own units, it can be extended to include them by
+
+[source,java]
+----
+include::{basedir}/src/main/java/Examples.java[tag="extendparser"]
+----
+
+If a particular string will not parse, try creating it using `getQuantity()` then compare the string with the `quantity.toString()` output.
+
+See xref:sect-puttingittogether[] for more details.
 
 

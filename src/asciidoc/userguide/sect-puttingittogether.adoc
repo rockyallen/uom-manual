@@ -1,5 +1,5 @@
 
-[[sect-puttingittogeter]]
+[[sect-puttingittogether]]
 == Putting it together-a new unit of measure
 
 This example shows how to define a new measurement unit, BMI.

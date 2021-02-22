@@ -59,11 +59,23 @@ include::sect-creatingnewunits.adoc[]
 
 include::sect-quantitytypes.adoc[]
 
-include::sect-puttingittogeter.adoc[]
+include::sect-puttingittogether.adoc[]
 
-include::sect-formatting.adoc[]
+== Parsing and formatting
 
-include::sect-parsing.adoc[]
+In JSR-265, the same class is responsible for both parsing and formatting, to maintain consistency.
+Never the less it is convenient to describe them separately.
+
+`UnitFormat` classes are responsible for converting units to and from String forms.
+
+`QuantityFormat` classes do the same for Quantitys.
+
+There is a variety of class available to encompass just about any format you might need; but only `SimpleUnitFormat` and `SimpleQuantityFormat` are provided in {product}.
+These provide formatters for SI units only.
+
+include::sect-parsing.adoc[leveloffset=+1]
+
+include::sect-formatting.adoc[leveloffset=+1]
 
 include::sect-objectproperties.adoc[]
 

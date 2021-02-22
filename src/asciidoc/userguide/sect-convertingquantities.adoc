@@ -4,8 +4,8 @@
 
 === to() method
 
-Any Quantity can be converted into an _equivalent_ Quantity in different (but _commensurable_) units using the ++Quantity.to()++ method.
-It results in a new ++Quantity++ Object:
+Any Quantity can be converted into an _equivalent_ Quantity in different (but _commensurable_) units using the `Quantity.to()` method.
+It results in a new `Quantity` Object:
 
 [source,java]
 ----

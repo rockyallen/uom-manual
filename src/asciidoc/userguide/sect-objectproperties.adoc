@@ -37,7 +37,7 @@ Quantity and Unit instances are immutable therefore unconditionally thread safe.
 
 === Identity, equality and equivalence of Quantitys
 
-To recap, Identity means the same Object (==), equality (.equals()) means strict equality of different objects, and equivalence (++isEquivalentTo()++) means representing the same physical value irrespective of its units.
+To recap, Identity means the same Object (`==`), equality (`equals()`) means strict equality of different objects, and equivalence (`isEquivalentTo()`) means representing the same physical value irrespective of its units.
 
 Identity is obvious, but is rarely used with Objects.
 
@@ -50,24 +50,20 @@ Compares this quantity against the specified object for strict equality (same un
 Similarly to the BigDecimal.equals(java.lang.Object) method which consider 2.0 and 2.00 as different objects because of different internal scales, quantities such as Quantities.getQuantity(3.0, KILOGRAM) Quantities.getQuantity(3, KILOGRAM) and Quantities.getQuantity("3 kg") might not be considered equals because of possible differences in their implementations.
 ____
 
-The 'might' is a fairly strong suggestion that the method should probably not be used, although in fact the example Quantitys are considered equal in {product}.
+The 'might' is a fairly strong indication that the method should not be used, although in fact the example Quantitys are considered equal in {product}.
 
 Equivalence is the normal test to use: it converts to common units where possible, then compares the amounts and the dimensions of the quantities.
 This lets it work across different units of the same Quantity type, and even across systems of units.
 
-Caveats:
+Caveats:.footnote[I am at my Java limits here, and making it up]
 
 - The amounts must be truly equal according to ({jdkjavadoc}/java/lang/Number.html[Number]): there is no method for "the same {plusminus} a bit".
 
-- The arguments must be typed (eg ++Quantity<Mass>++ not ++Quantity<?>++) which can make the method less convenient to use.
-
-ED: I am at my Java limits here, and making it up
+- The arguments must be typed (eg `Quantity<Mass>` not `Quantity<?>`) which can make the method less convenient to use.
 
 === Ordering
 
-// - Dont understand why Quantity doesn't implement comparable?
-
-Quantites are not declared as comparable, but they seem to be anyway:
+Quantitys are not declared as comparable, but you can use them in Sorted Collections anyway:.footnote:[Quantity doesn't implement Comparable (Why not?) but get Quantity does, and all creation methods seem to delegate to it]
 
 .Sorting quantities
 [source,java]
@@ -77,7 +73,7 @@ include::{basedir}/src/main/java/Examples.java[tag="collections"]
 
 Sorting is by base value as you would hope.
 
-If you want to make explicit comparisons, declare your variables as ++ComparableQuantity++:
+If you want to make explicit comparisons, declare or cast your Quantitys to `ComparableQuantity`:
 
 .Comparable
 [source,java]
@@ -86,18 +82,18 @@ include::{basedir}/src/main/java/Examples.java[tag="comparable"]
 ----
 
 You can use the Comparable.compareTo() directly as shown, but the class also has convenience methods 
-++isLessThan()++, ++isGreaterThanOrEqualTo()++ etc.
+`isLessThan()`, `isGreaterThanOrEqualTo()` etc.
 
 [WARNING]
-The test used in the comparator for "the same" is ++isEquivalentTo()++ but the ++equals()++ method is used when adding to Sets.
+The test used in the comparator for "the same" is `isEquivalentTo()` but the `equals()` method is used when adding to Sets.
 Equals is therefore not consistent with Comparable, and the general contract for Collections will be broken if you use Quantities in Sets.
-(ref Bloch item )
+(ref Bloch item X)
 
 === Serialisation
 
 ==== Using +java.io.Serializable+
 
-Yes, with no restrictions.
+Yes, with no restrictions (check).
 
 ==== Using text
 

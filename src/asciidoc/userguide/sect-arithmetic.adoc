@@ -11,21 +11,21 @@ This is going to be the main cut-and-paste resource for users.
 
 You can do the following arithmetic operations on Quantitys, and know that the resulting units and values are consistent:
 
-- add (++add(Quantity)++)
+- add (`add(Quantity)`)
 
-- subtract (++subtract(Quantity)++)
+- subtract (`subtract(Quantity)`)
 
-- divide (++divide(Quantity)++)
+- divide (`divide(Quantity)`)
 
-- multiply (++multiply(Quantity)++)
+- multiply (`multiply(Quantity)`)
 
-- mutiply by a number (++mutiply(Number)++)
+- mutiply by a number (`mutiply(Number)`)
 
-- divide by a number (++divide(Number)++)
+- divide by a number (`divide(Number)`)
 
-- reciprocal (++reciprocal()++)
+- reciprocal (`inverse()`)
 
-- change sign (++change()++)
+- change sign (`negate()`)
 
 For example:
 
@@ -56,14 +56,14 @@ The methods are associative and commutative and distributive just as the normal 
 
 providing that "=" is understood as _equivalence_ rather than _equality_ (xref:sect-terminology[]).
 
-The Quantity Type of an expresion involving more than 1 unit cannot be determined by the compiler, hence the Quantity<?>.
+The Quantity Type of an expression involving more than 1 unit cannot be determined by the compiler, hence the Quantity<?>.
 
 [source,java]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="multiplyresultcast"]
 ----
 
-You can (should) specify the Quantity Type with the ++.asType()++ method.
+You can (should) specify the Quantity Type with the `.asType()` method.
 This is a hint to the compiler so that it can assign the correct type.
 
 Also the unit has the correct dimensions, but may not be in the form you want.
