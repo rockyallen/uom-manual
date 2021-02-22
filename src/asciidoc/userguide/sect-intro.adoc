@@ -94,7 +94,7 @@ The Gitter page for questions is: https://gitter.im/unitsofmeasurement/indriya
 
 The project source is in GitHub: https://github.com/unitsofmeasurement/indriya
 
-The library Javadoc is published at: https://javadoc.io/doc/tech.units/indriya/latest/overview-summary.html
+The library Javadoc is published at: {javadoc}/overview-summary.html
 
 You can read the JSR at: https://jcp.org/en/jsr/detail?id=385
 

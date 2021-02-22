@@ -3,24 +3,39 @@
 == Arithmetic
 
 ////
-- Check the distributive stuff. Exactly what does it mean?
-
 - Include lots of examples of real-world usage and use only the recommended idioms.
 This is going to be the main cut-and-paste resource for users.
 ////
 
 === Basic operations
 
-You can do the normal arithmetic operations on Quantitys (add/subtract/divide/multiply, and mutiply/divide by a number), and be sure that the resulting units and values are consistent.
-For example, an addition:
+You can do the following arithmetic operations on Quantitys, and know that the resulting units and values are consistent:
 
+- add (++add(Quantity)++)
+
+- subtract (++subtract(Quantity)++)
+
+- divide (++divide(Quantity)++)
+
+- multiply (++multiply(Quantity)++)
+
+- mutiply by a number (++mutiply(Number)++)
+
+- divide by a number (++divide(Number)++)
+
+- reciprocal (++reciprocal()++)
+
+- change sign (++change()++)
+
+For example:
+
+.Quantity addition
 [source,java]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="mixedCompatibleUnits"]
 ----
 
-And a multiplication:
-
+.Quantity multiplication
 [source,java]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="multiplyresult"]
@@ -41,21 +56,21 @@ The methods are associative and commutative and distributive just as the normal 
 
 providing that "=" is understood as _equivalence_ rather than _equality_ (xref:sect-terminology[]).
 
-The Quantity Type of a multiply or divide is anonymous (hence the Quantity<?>).
-Also the unit has the correct dimensions, but may not be in the form you want.
-You can (should) specify the Quantity Type, and adjust the units to the traditional form if one exists:
+The Quantity Type of an expresion involving more than 1 unit cannot be determined by the compiler, hence the Quantity<?>.
 
 [source,java]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="multiplyresultcast"]
 ----
 
-- The .asType() is a hint to the compiler so that it can assign the correct type.
+You can (should) specify the Quantity Type with the ++.asType()++ method.
+This is a hint to the compiler so that it can assign the correct type.
 
-- The to() method converts to your preferred Unit.
+Also the unit has the correct dimensions, but may not be in the form you want.
+The to() method converts to your preferred Unit.
 
 Both methods throw a runtime Exception if the dimensions of the Quantity do not match the dimensions of the argument.
-This is a useful check and should be included if possible.
+This is a useful check and should normally be included.
 
 [[temperaturesums]]
 === Quirks
@@ -64,7 +79,7 @@ This is a useful check and should be included if possible.
 
 // - Addition/increment distinction
 
-The methods are mathematically correct, but this can lead to surprising results, particularly with shifted units ({issue}/17[issue #17]).
+The methods are mathematically correct, but this can lead to surprising results, particularly with relative units ({issue}/17[issue #17]).
 For example, you might expect 2{deg}C + 3{deg}C to be 5{deg}C, but when you try it the result is 278.15{deg}C:
 
 [source,java]
@@ -100,5 +115,4 @@ include::{basedir}/src/main/java/Examples.java[tag="einstein"]
 - This actually negates the benefits. 
 Is there a better way?
 ////
-
 

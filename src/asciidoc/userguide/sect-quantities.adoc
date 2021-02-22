@@ -33,11 +33,25 @@ This is normally only used when reading external input.
 
 arithmetic - see xref:sect-arithmetic[]
 
-  getScale() - TBD
+++getScale()++::
+  Is the unit relative (like CELSIUS)?
+Can't think of a user application for this.
 
-  inverse() - TBD
+++toSystemUnit()++:
+  Shorthand for ++q.to(q.getSystemUnit())++:
+Useful for converting to the base unit before using the primitive value (xref:sect-performance]).
 
-  negate() - TBD
+=== Utilty classes
 
-  toSystemUnit() - TBD
+Although they are not required by JSR-385, {product} contains several application classes based on Quantity:
+
+QuantityRange::
+  Has minimum and maximum Quantitys, with a single method ++contains(final Quantity<Q> q)++.
+See xref:{javadoc}/quantity/QuantityRange.html[javadoc] for details.
+
+CompoundQuantity::
+  Represents multi-radix quantities (like "1 hour, 5 min, 30 sec" or "6 ft, 3 in").
+See xref:{javadoc}/quantity/CompoundQuantity.html[javadoc] for details.
+
+- Should this be MixedQuantity?
 

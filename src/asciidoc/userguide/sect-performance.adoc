@@ -10,7 +10,7 @@ Was interactive, now unusable.
 ////
 
 The advantages of using dimensioned quantities come at a price in speed and storage space.
-UOM has been reported as about 20 times slower than BigDecimal ({issue}298[issue #298], {issue}299[issue #299]).
+UOM has been reported as about 20 times slower than BigDecimal ({issue}/298[issue #298], {issue}299[issue #299]).
 
 === Speed
 
@@ -92,9 +92,19 @@ include::{basedir}/src/main/java/Examples.java[tag="constants"]
 Use consistent units.
 For long maths routines, this means creating or converting all quantities to consistent units first using +.to()+.
 
-**Don't use Quantities**
+**Don't use Quantities (1)**
 
 For some tasks, the UnitConverter class can be used to avoid the cost of creating multiple Quantitys (xref:sect-unitconverter[]).
+
+**Don't use Quantities (2)**
+
+In numerically intensive code, use Quantities only at the input and output of your routines, then use primitives to do the actual sums.
+ie 
+
+[source,java]
+---
+double q_internal ++q_input.toSystemUnits().getValue().doubleValue()++; ...
+----
 
 === Size
 
