@@ -9,15 +9,31 @@ The default <number><space>[prefix]<unit> works OK, so this is all I will descri
 Formatting is an exact reversal of parsing.
 See the previous table for examples.
 
-////
+
 [[sect-formattingunits]]
 === Formatting Units
 
-The units a
+Unit Formatting
+The UnitFormat interface allows to format a given unit into an Appendable and parse a specified CharSequence
+to produce a Unit. It also offers a simplified format() method returning a String. If there is no unit to parse, a
+dimensionless unitary unit is returned.
+
+In addition, there are 2 methods, label() and isLocalSensitive(), both assisting format and parse on different
+environments. label() attaches a “system-wide” 12 label to the specified unit. Especially for units that have no
+symbol or name (e.g. product of units), this offers a standard way to assign a display label to a unit. It also
+allows to override an existing label (symbol, name or the result of operations) if you need to display that unit
+differently. isLocalSensitive() tells whether this format depends on a locale. In environments that do not support
+Locale, e.g. Java ME, this usually returns false. In the Reference Implementation the SimpleUnitFormat class
+is locale-insensitive while other implementations like LocalUnitFormat are locale-sensitive. If a UnitFormat
+implementation isLocalSensitive(), it usually provides at least one instance for a given Locale or equivalent.
+There, label() will only affect that particular instance and has to be applied for all supported languages or
+locales.
 
 [[sect-formattingquantities]]
 === Formatting Quantitys
 
-TBD
-////
+- How do I control the number format? (, space, sig figure, decimal places)
+
+- How do I prepend (rather than append) the units? ie £
+
 

@@ -17,14 +17,14 @@ If the units are not commensurable, you will be prevented from doing so with a c
 [[sect-unitconverter]]
 === Converting primitives
 
-If you have to convert many primitive numbers, the UnitConverter class can do it without creating a new Quantity every time:
+If you have to convert many primitive numbers, use a  `UnitConverter`:
 
 [source,java]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="converter"]
 ----
 
-This only converts primitives, so is a half-way house between manual conversion and making everything a Quantity.
-It might be useful if the performance hit of Quantity is unacceptable (xref:sect-performance[]).
+The (possibly complex) maths of working out the conversion factor occurs just once, and the subsequent conversions are as fast as possible.
 
-
+This only converts primitives, so is a half-way house between manually controlling units and making everything a Quantity.
+It can be used if the performance hit of Quantity is unacceptable (xref:sect-performance[]).

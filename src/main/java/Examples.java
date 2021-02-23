@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import javax.measure.Dimension;
 import javax.measure.MetricPrefix;
+import static javax.measure.MetricPrefix.CENTI;
 import static javax.measure.MetricPrefix.KILO;
 import javax.measure.UnitConverter;
 import javax.measure.quantity.Area;
@@ -178,10 +179,16 @@ public class Examples {
 
     public void unitConverter() {
 // tag::converter[]
-        UnitConverter metreToKilometre = METRE.getConverterTo(MetricPrefix.KILO(METRE));
+        Unit<Length> sourceUnit = METRE;
+        Unit<Length> targetUnit = CENTI(METRE);
+        UnitConverter converter = sourceUnit.getConverterTo(targetUnit);
+        double length1 = 4.0;
+        double length2 = 6.0;
+        double result1 = converter.convert(length1);
+        double result2 = converter.convert(length2);
+        System.out.println(result1); // 400.0
+        System.out.println(result2); // 600.0
 
-        System.out.println(metreToKilometre.convert(52.5)); // 0.0525
-        System.out.println(metreToKilometre.convert(3000)); // 3
 // end::converter[]
     }
 
@@ -281,7 +288,9 @@ public class Examples {
             if (u.getDimension().getBaseDimensions() != null) {
                 for (Map.Entry<? extends Dimension, Integer> e : u.getDimension().getBaseDimensions().entrySet()) {
                     sb.append(e.getKey());
-                    if (e.getValue()!=1) sb.append("^" + e.getValue() + "^ ");
+                    if (e.getValue() != 1) {
+                        sb.append("^" + e.getValue() + "^ ");
+                    }
                 }
             }
             sb.append("\n");

@@ -23,3 +23,10 @@ java.lang.ClassCastException: The unit: W is not compatible with quantities of t
   Quantity<Length> xordinate = Quantities.getQuantity(3000, WATT).asType(Length.class);
 
 
+nit<Length> m = AbstractUnit.parse("m").asType(Length.class);
+Unit<Area> m2 = m.pow(2).asType(Area.class);
+Unit<Pressure> Pa = NEWTON.divide(m2).asType(Pressure.class);
+The asType(Class) method, which can be applied on a Unit or Quantity instance, checks at run time if the unit
+has the dimension of a given quantity, specified as a Class object. If the unit doesn't have the correct dimension,
+then a ClassCastException is thrown. This check allows for earlier dimension mismatch detection compared to
+the unchecked casts, which will throw an exception only when a unit conversion is first requested.

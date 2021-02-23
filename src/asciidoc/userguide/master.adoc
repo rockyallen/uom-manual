@@ -6,12 +6,12 @@
 :issue: https://github.com/unitsofmeasurement/indriya/issues
 :javadoc: https://javadoc.io/doc/tech.units/indriya/2.1.1/tech/units/indriya
 :jdkjavadoc: https://docs.oracle.com/javase/8/docs/api
+:interpunct: £#183
 
 = Units of Measure: User Guide
 
 ////
 - Very drafty. 
-The list at the start of each chapter describes what is going to be in it, and will be removed eventually.
 
 - Quantitys (class name) or quantities (normal english)?
 
@@ -23,11 +23,12 @@ The list at the start of each chapter describes what is going to be in it, and w
 
 - static imports?
 
+- *USER* guide: Try not to just duplicate the spec
+
 - Possible bug: Dimension.getBaseDimensions() contains J, N, I. How are these base units?
 
 - Possible error in javadocs for AbstractQuantity.equals():
 "To compare quantities stated using different units or using different amount implementations the compareTo or equals(Quantity, epsilon, epsilonUnit) methods should be used."
-
 
 For my info:
 

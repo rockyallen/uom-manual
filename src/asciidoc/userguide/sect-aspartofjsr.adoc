@@ -8,9 +8,34 @@ But it may be the only way to do things like use other parsers and other systems
 In which case it may have to be moved up to the getting started section.
 ////
 
+Obtaining Unit Instances
+Unit instances can be obtained in a number of
+
 {product} is one implementation of JSR-365, and provides a comprehensive set of classes for dealing with SI units. 
 However it does not provide non-SI units or complex formatting.
 To get these facilities you can use the service provided interface contained in the JSR-365 core library.
+
+=== Service Provider
+ServiceProvider is the only class (other than exceptions or enums) in JSR 385. It is an abstract base class for
+service providers defined by implementations and extension modules on top of them. ServiceProvider.current()
+provides the currently loaded ServiceProvider instance discovered with the highest priority.
+ServiceProvider.available() returns a list of all ServiceProvider instances found in the current classloader(s). The
+default mechanism is based on the java.util.ServiceLoader class.
+by calling ServiceProvider.setCurrent() implementations or 3rd party modules may chose a different
+mechanism, either OSGi, a Dependency Injection framework or other service loading techniques like Java
+ME LIBlets [MEEP8_OPTIONAL] as well as Java 9 [JIGSAW].
+By ordering the registered instances along the priority (the most significant first), it is also possible to
+override partial aspects, as the first non null provider is returned by the call.
+Services
+The following services are available via ServiceProvider:
+
+- FormatService to retrieve different UnitFormat or QuantityFormat implementations defined by the
+implementation in use or 3rd party libraries.
+
+- SystemOfUnitsService provides access to different SystemOfUnits and Prefix implementations defined
+by either the implementation of choice or 3rd party unit system libraries. Because Prefix
+implementations like the MetricPrefix (part of the RI) are often tied to a particular SystemOfUnits we
+considered it a good choice combining access to both in SystemOfUnitsService.
 
 For example, you can obtain other formatters by name:
 
@@ -26,5 +51,4 @@ QuantityFormat format = formatService.getQuantityFormat();
 QuantityFormat nsFormat = formatService.getQuantityFormat(“NumberSpace”);
 ----
 
-TBD
 

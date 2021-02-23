@@ -80,7 +80,7 @@ Some suggestions for improving speed:
 
 **Avoid unnecessary object creation**
 
-Instances with identical constructor arguments are immutable and functionally identical, so you can define Units and frequently used constants just once:
+Define Units and frequently used constants just once:
 
 [source,java]
 ----
@@ -90,7 +90,7 @@ include::{basedir}/src/main/java/Examples.java[tag="constants"]
 **Avoid unnecessary Unit conversion**
 
 Use consistent units.
-For long maths routines, this means creating or converting all quantities to consistent units first using +.to()+.
+For long maths routines, this means creating or converting all quantities to consistent units first using `.to()`.
 
 **Don't use Quantities (1)**
 
@@ -99,13 +99,13 @@ For some tasks, the UnitConverter class can be used to avoid the cost of creatin
 **Don't use Quantities (2)**
 
 In numerically intensive code, use Quantities only at the input and output of your routines, then use primitives to do the actual sums.
-ie 
 
 [source,java]
 ----
-method(Quantity<Mass> q_input) {
-double q_internal = q_input.toSystemUnits().getValue().doubleValue(); 
-...
+Quantity<Power> method(Quantity<Mass> q_input) {
+  double q_internal = q_input.to(METRE).getValue().doubleValue(); 
+  ...
+  return getQuantity(d_result, WATT);
 }
 ----
 
@@ -133,6 +133,7 @@ Some suggestions for reducing space:
 If you have many quantities of the same Unit, you can save space by only storing the Unit once.
 The following class is type-safe in that attempting to set a quantity that is not commensurable with the unit provided in the constructor will cause a run-time exception (+UnconvertibleException+).
 
+.DimensionedVector.java
 [source,java]
 ----
 include::{basedir}/src/main/java/DimensionedVector.java[tag="class"]
@@ -140,10 +141,11 @@ include::{basedir}/src/main/java/DimensionedVector.java[tag="class"]
 
 **Store Quantities as primitives** (serialisation)
 
-Each instance of the +ThermoCoupleReading+ class below serialises as 2 floats, but keeps the type-safety of Quantity.
+Each instance of the +ThermometerSample+ class below serialises as 8 bytes, but keeps the type-safety of Quantity.
 
+.ThermometerSample.java
 [source,java]
 ----
-include::{basedir}/src/main/java/ThermoCoupleReading.java[tag="class"]
+include::{basedir}/src/main/java/ThermometerSample.java[tag="class"]
 ----
 

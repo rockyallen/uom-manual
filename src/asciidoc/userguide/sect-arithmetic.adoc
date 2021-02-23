@@ -64,13 +64,12 @@ include::{basedir}/src/main/java/Examples.java[tag="multiplyresultcast"]
 ----
 
 You can (should) specify the Quantity Type with the `.asType()` method.
-This is a hint to the compiler so that it can assign the correct type.
+Firstly it is a hint to the compiler so that it can assign the correct type.
+Secondly it throws a `ClassCastException` at run time if the unit does not have the same dimensions as the argument, helping to detect more errors.
+The method can be applied on a Unit or Quantity instance.
 
 Also the unit has the correct dimensions, but may not be in the form you want.
 The to() method converts to your preferred Unit.
-
-Both methods throw a runtime Exception if the dimensions of the Quantity do not match the dimensions of the argument.
-This is a useful check and should normally be included.
 
 [[temperaturesums]]
 === Quirks
