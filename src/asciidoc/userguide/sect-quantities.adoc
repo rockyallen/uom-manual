@@ -15,19 +15,23 @@ The value is a Number, so the precision and length of the Quantity is defined by
 
 === Creating Quantitys
 
-The normal method to create a Quantity was illustrated above:
+For completeness, the ways to create new Quantities are:
 
-[source,java,indent=2]
-----
-include::{basedir}/src/main/java/Minimal.java[tag="main"]
-----
+`Quantities.getQuantity`::
+  The normal way to create a Quantity from primitives, as illustrated above.
 
-Because Quantitys are immutable, arithmetic operations and converters also result in new Quantity objects.
+Arithmetic::
+  Because Quantitys are immutable, arithmetic operations and converters also result in new Quantity objects.
 
-The other way to create quantities is by parsing Strings (xref:sect-parsing[]).
+Parsing strings::
+  See xref:sect-parsing[].
 This is normally only used when reading external input.
 
-- Any others?
+Other library factories::
+  TBD
+
+(De-)Serialisation::
+  Yes
 
 === Methods
 

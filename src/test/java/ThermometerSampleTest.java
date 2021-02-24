@@ -48,7 +48,7 @@ public class ThermometerSampleTest {
         byte[] bytes = SerialisationHelper.tobytes(instance);
 
         System.out.println("Size=" + bytes.length);
-        assertEquals(8 * sample + 1300, bytes.length);
+        assertEquals(8 * sample + 6094, bytes.length);
 
         ThermometerSample[] result = SerialisationHelper.frombytes(bytes, instance.getClass());
         assertEquals(instance[79], result[79]);
