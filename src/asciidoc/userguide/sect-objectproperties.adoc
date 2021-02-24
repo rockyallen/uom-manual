@@ -93,13 +93,16 @@ Equals is therefore not consistent with Comparable, and the general contract for
 
 ==== Using +java.io.Serializable+
 
-Yes, with no restrictions (check).
+`Quantity` is not serializable but `ComparableQuantity` is.
+Does this mean that you have to hope that QuantityFactories obtained from other libraries produce Serializable as well?
+Or recreate then using {product}? Head spinning.
+The stored size is variable, roughly 20 to 60 bytes.
 
 ==== Using text
 
 Yes, with some caveats.
 
-The text (`Quantity.toString()`) form is guaranteed to be convertible to and from the binary form without loss of precision.
+The text (`Quantity.toString()`) form produced by a formatter is guaranteed to be convertible to and from the binary form without loss of precision.
 That is:
 
 [source,java,indent=2]
@@ -107,7 +110,7 @@ That is:
 include::{basedir}/src/main/java/Examples.java[tag="text"]
 ----
 
-This is required by the JSR, so should be true for any other implementation as well.
+This is required by the JSR (is it?), so should be true for any other implementation as well.
 
 If you have defined your own units, either convert the quantities to built-in units before export, or distribute your program as well, otherwise the recipient will not be able to parse the output.
 
@@ -117,5 +120,4 @@ If you are restricted to ASCII-only files (ie no Unicode), use the ASCII flavour
 
 Not currently implemented.
 See {issue}/264[issue #264] and {issue}/266[issue #266].
-
 

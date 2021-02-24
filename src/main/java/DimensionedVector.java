@@ -1,4 +1,6 @@
 
+import java.io.Serializable;
+import java.util.Arrays;
 import javax.measure.Quantity;
 import javax.measure.Unit;
 import tech.units.indriya.quantity.Quantities;
@@ -13,7 +15,7 @@ import tech.units.indriya.quantity.Quantities;
  * time error instead?
  */
 // tag::class[]
-public class DimensionedVector<T extends Quantity<T>> {
+public class DimensionedVector<T extends Quantity<T>> implements Serializable {
 
     private final double[] arr;
     private final Unit<T> unit;
@@ -23,10 +25,9 @@ public class DimensionedVector<T extends Quantity<T>> {
         this.unit = unit;
     }
 
- // Currently only throws a runtime exception. How can I make it throw a compile
- // time error instead?
-
- public void set(int i, Quantity<T> qty) {
+    // Currently only throws a runtime exception. How can I make it throw a compile
+    // time error instead?
+    public void set(int i, Quantity<T> qty) {
         arr[i] = qty.to(unit).getValue().doubleValue();
     }
 
@@ -36,6 +37,13 @@ public class DimensionedVector<T extends Quantity<T>> {
 
     public Unit<T> getUnit() {
         return unit;
+    }
+    
+    @Override
+    public boolean equals(Object obj)
+    {
+        DimensionedVector that = (DimensionedVector)obj;
+        return this.unit.equals(that.unit)&&Arrays.equals(this.arr, that.arr);
     }
 }
 // end::class[]

@@ -2,14 +2,8 @@
 [[sect-parsing]]
 == Parsing
 
-[WARNING]
-According to the Javadocs, the parser should be configurable for the number-unit separator and the multiple-radix separators, but I can't get it to work.
-The default <number><space>[prefix]<unit> works OK, so this is all I will describe until I work out what is going on.
-
-[NOTE]
-`SimpleQuantityFormat` contains a number formatter and a `SimpleUnitFormatter` so any description of unit handling in `SimpleQuantityFormat` covers `SimpleUnitFormat` as well.
-
-`SimpleQuantityFormat` can interpret decimal numbers, rational numbers, unit symbols, compound units and SI prefixes.
+`SimpleQuantityFormat` can interpret decimal numbers, rational numbers, unit symbols, compound units and SI prefixes.footnote:[According to the Javadocs, the parser should be configurable for the number-unit separator and the multiple-radix separators, but I can't get it to work. The default <number><space>(prefix)<unit> works OK, so this is all I will describe until I work out what is going on.]
+(`SimpleQuantityFormat` contains a `SimpleUnitFormat` so this description covers `SimpleUnitFormat` as well).
 
 For example:
 
@@ -20,8 +14,9 @@ For example:
 ----
 //  String reparse = f.parse(output).toString();
 
+.Parsing examples
 |===
-|Case |Input |Output
+|Case |Input (Note 1,2,3,4) |Output (Note 5)
 
 // exp=6 m equal=true equivalent=true reparse=6 m
 |Simple
@@ -63,29 +58,36 @@ For example:
 |Leading 1
 |[`6 1/s`]
 |javax.measure.format.MeasurementParseException: unexpected token INTEGER
+
+|Alias (Note 6)
+|27.6 R
+|27.6 R
+
+|Custom (Note 7)
+|27.6 BMI
+|27.6 BMI
+
+
 |===
 
 *Notes*
 
 1. The prefix has no separator between it and the unit.
 
-2. There must be a Unicode middle dot (not dot, full space or small space) between compound units.
+2. There must be a Unicode middle dot (not dot, full space or small space) between compound units. (xref:table-unicode[])
 
 3. Extra whitespace between the number and the unit is ignored.
 
-4. To use numerals to specify powers, use the unicode superscript digits.
+4. To use numerals to specify powers, use the unicode superscript digits. (xref:table-unicode[])
 
 5. In all cases, the output can be toString()ed and reparsed, and the result is equal and equivalent to the first parse result.
 
-6. If you have defined your own units, the parser can be extended to include them by:
+6. Defined with `label()` xref:?
 
-.Registering a unit symbol
-[source,java,indent=2]
-----
-include::{basedir}/src/main/java/Examples.java[tag="extendparser"]
-----
+7. If you have registered them with the parser (xref:sect-creatingnewunits[])
 
-.Unicode symbols
+[[table-unicode]]
+.Unicode characters for unit symbols
 [source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="unicode"]
@@ -94,5 +96,4 @@ include::{basedir}/src/main/java/Examples.java[tag="unicode"]
 If a particular string will not parse, try creating it using `getQuantity()` then compare the string with the `quantity.toString()` output.
 
 See xref:sect-puttingittogether[] for more details.
-
 

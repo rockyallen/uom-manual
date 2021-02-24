@@ -1,4 +1,6 @@
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import tech.units.indriya.ComparableQuantity;
+import tech.units.indriya.quantity.NumberQuantity;
 import tech.units.indriya.quantity.Quantities;
 import static tech.units.indriya.quantity.Quantities.*;
 import tech.units.indriya.unit.AlternateUnit;
@@ -301,7 +304,6 @@ public class UnitsTest {
         q = q.divide(Double.MAX_VALUE);
         assertEquals(Double.MAX_VALUE, q.getValue().doubleValue());
 
-
         // infinity
         assertThrows(IllegalArgumentException.class, () -> {
             getQuantity(Double.POSITIVE_INFINITY, WATT);
@@ -314,5 +316,23 @@ public class UnitsTest {
         Quantity q = getQuantity(0.0, WATT);
         q = q.negate();
         System.out.println(q);
+    }
+
+    @Test
+    public void testSerialsationQ() throws IOException, ClassNotFoundException {
+        System.out.println("testSerialsationQ()");
+
+        int sample = 1000;
+        ComparableQuantity[] instance = new ComparableQuantity[sample];
+        for (int i = 0; i < sample; i++) {
+            instance[i] = Quantities.getQuantity(1000.1, WATT);
+        }
+        byte[] bytes = SerialisationHelper.tobytes(instance);
+
+        System.out.println("Size=" + bytes.length);
+        assertEquals(21 * sample + 1361, bytes.length);
+
+        ComparableQuantity[] result = SerialisationHelper.frombytes(bytes, instance.getClass());
+        assertEquals(instance[30], result[30]);
     }
 }

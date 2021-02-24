@@ -39,6 +39,7 @@ considered it a good choice combining access to both in SystemOfUnitsService.
 
 For example, you can obtain other formatters by name:
 
+.Service Provider Interface
 [source, java]
 ----
 // Get the service

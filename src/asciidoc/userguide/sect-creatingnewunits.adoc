@@ -31,7 +31,7 @@ There are several methods for creating derived units, each with its own uses and
 - Parsing
 
 All user-defined units have exactly the same abilities as the built-in units.
-for example, after you have defined a unit, it automatically becomes available to the parser.
+for example, after you have defined a unit, you can add it to the parser.
 
 - Prove it!
 
@@ -97,5 +97,13 @@ TBD
 - What does Unit<?> mean and is it a good idea?
 ////
 
-TBD
+=== Register the new unit with the parser
+
+ defined your own units, the parser can be extended to include them by:
+
+.Registering a unit symbol
+[source,java,indent=2]
+----
+include::{basedir}/src/main/java/Examples.java[tag="extendparser"]
+----
 

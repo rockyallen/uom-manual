@@ -57,8 +57,7 @@ The methods are associative and commutative and distributive just as the normal 
 providing that "=" is understood as _equivalence_ rather than _equality_ (xref:sect-terminology[]).
 
 The Quantity Type of an expression involving more than 1 unit cannot be determined by the compiler, hence the Quantity<?> in the multiplication example.
-
-You can (should) specify the Quantity Type with the `.asType()` method:
+To fix this, you can (should) specify the Quantity Type with the `.asType()` method:
 
 [source,java,indent=2]
 ----
@@ -71,7 +70,7 @@ The method can be applied on a Unit or Quantity instance.
 The unit is guaranteed to have the correct dimensions, but may not be in the form you want.
 The to() method converts to your preferred Unit.
 
-=== Arithmetic errors
+=== Numerical errors
 
 Divide by 0 and invalid numbers throw an `IllegalArgumentException`:
 

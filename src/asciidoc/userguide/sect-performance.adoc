@@ -120,9 +120,9 @@ Quantity<Power> method(Quantity<Mass> q_input) {
 
 |long|Any|8
 
-|BigDecimal|1923.5|TBD
+|BigDecimal|1923.5|32
 
-|Quantity|1923.5 W|TBD
+|Quantity|1923.5 W|22
 
 |===
 
