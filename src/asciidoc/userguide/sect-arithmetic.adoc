@@ -30,13 +30,13 @@ You can do the following arithmetic operations on Quantitys, and know that the r
 For example:
 
 .Quantity addition
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="mixedCompatibleUnits"]
 ----
 
 .Quantity multiplication
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="multiplyresult"]
 ----
@@ -56,20 +56,45 @@ The methods are associative and commutative and distributive just as the normal 
 
 providing that "=" is understood as _equivalence_ rather than _equality_ (xref:sect-terminology[]).
 
-The Quantity Type of an expression involving more than 1 unit cannot be determined by the compiler, hence the Quantity<?>.
+The Quantity Type of an expression involving more than 1 unit cannot be determined by the compiler, hence the Quantity<?> in the multiplication example.
 
-[source,java]
+You can (should) specify the Quantity Type with the `.asType()` method:
+
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="multiplyresultcast"]
 ----
-
-You can (should) specify the Quantity Type with the `.asType()` method.
 Firstly it is a hint to the compiler so that it can assign the correct type.
 Secondly it throws a `ClassCastException` at run time if the unit does not have the same dimensions as the argument, helping to detect more errors.
 The method can be applied on a Unit or Quantity instance.
 
-Also the unit has the correct dimensions, but may not be in the form you want.
+The unit is guaranteed to have the correct dimensions, but may not be in the form you want.
 The to() method converts to your preferred Unit.
+
+=== Arithmetic errors
+
+Divide by 0 and invalid numbers throw an `IllegalArgumentException`:
+
+.Arithmetic errors throw IllegalArgumentException
+[source,java,indent=2]
+----
+getQuantity(0.0, WATT).inverse();
+getQuantity(0, WATT).inverse();
+getQuantity(10, WATT).divide(getQuantity(0, WATT));
+getQuantity(10, WATT).divide(0);
+getQuantity(Double.NaN, WATT);
+getQuantity(Double.POSITIVE_INFINITY, WATT);
+----
+
+Quantity can hold numbers larger than `Double.MAX_VALUE` (how large?), but if you try to return them as double you get INF:
+
+.Arithmetic overflow
+[source,java,indent=2]
+----
+Quantity q = getQuantity(Double.MAX_VALUE, WATT).multiply(getQuantity(Double.MAX_VALUE, WATT));
+double d = q.getValue().doubleValue();
+assertTrue(Double.isInfinite(d));
+----
 
 [[temperaturesums]]
 === Quirks
@@ -81,7 +106,7 @@ The to() method converts to your preferred Unit.
 The methods are mathematically correct, but this can lead to surprising results, particularly with relative units ({issue}/17[issue #17]).
 For example, you might expect 2{deg}C + 3{deg}C to be 5{deg}C, but when you try it the result is 278.15{deg}C:
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="temperaturesumswrong"]
 ----
@@ -96,19 +121,21 @@ This is because the quantities are (conceptually) converted to base units first,
 Rather than adding, you probably intended to *increment* 2{deg}C by a further 3{deg}C.
 {product} does not provide an increment method, but instead, you could use:
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="temperaturesumsright"]
 ----
 
+////
 === Equations
 
 // Using quantities in formulas - recommend idiom ie
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="einstein"]
 ----
+////
 
 ////
 - This actually negates the benefits. 

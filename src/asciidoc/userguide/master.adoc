@@ -42,6 +42,10 @@ TODO:
 
 ////
 
+[WARNING]
+I am creating this document as I learn {product} so it has many errors and misunderstandings.
+For now, use it as only an example of Asciidoctor.
+
 include::sect-intro.adoc[]
 
 include::sect-gettingstarted.adoc[]

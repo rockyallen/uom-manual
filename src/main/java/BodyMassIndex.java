@@ -82,7 +82,7 @@ public class BodyMassIndex {
         // 4. Create one by parsing
         Quantity<Bmi> bmi4 = Quantities.getQuantity("27.6 BMI").asType(Bmi.class);
         System.out.println(bmi4); // 27.6 BMI
-
+        
         // 5. Show that the quantity type works to prevent mismatches
         Quantity<Bmi> bmi5 = null;
         try {
@@ -90,7 +90,7 @@ public class BodyMassIndex {
                 Quantities.getQuantity(50, KILOGRAM).asType(Bmi.class);
             System.out.println("WRONG " + bmi5); // 50 kg !???
         } catch (java.lang.ClassCastException ex) {
-        // Expect java.lang.ClassCastException: The unit: kg/m² is not compatible with quantities of type interface javax.measure.quantity.Length
+        // Expect java.lang.ClassCastException: The unit: kg/m² is not compatible with quantities of type interface javax.measure.quantity.Mass
             System.out.println(ex); 
         }
         // but this corrrectly spots the error

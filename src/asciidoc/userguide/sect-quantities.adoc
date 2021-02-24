@@ -6,7 +6,7 @@
 
 A Quantity has a value, units and dimensions with getter methods for them:
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="quantitygetters"]
 ----
@@ -17,7 +17,7 @@ The value is a Number, so the precision and length of the Quantity is defined by
 
 The normal method to create a Quantity was illustrated above:
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Minimal.java[tag="main"]
 ----
@@ -46,7 +46,7 @@ Useful for converting to the base unit before using the primitive value (xref:se
 Although they are not required by JSR-385, {product} contains several application classes based on Quantity:
 
 QuantityRange::
-  Has minimum and maximum Quantitys, with a single method `contains(final Quantity<Q> q)`.
+  Has low and high Quantitys, with a single method `contains(final Quantity<Q> q)`.
 See xref:{javadoc}/quantity/QuantityRange.html[javadoc] for details.
 
 CompoundQuantity::

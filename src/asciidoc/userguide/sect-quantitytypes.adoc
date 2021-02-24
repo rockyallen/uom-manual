@@ -6,7 +6,7 @@
 
 Quantity type is just a marker interface for any property that you want:
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="newQuantityTypeInterface"]
 ----
@@ -43,14 +43,14 @@ Further research required
 A Quantity must have a Quantity type if you want to use it in add or subtract arithmetic.
 One use of custom quantity types is to label otherwise anonymous Quantitys so that you can do arithmetic with them:
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/BodyMassIndex.java[tag="newQuantityType"]
 ----
 
 It can also be used to distinguish properties that should not be mixed, but that unfortunately have the same dimensions:
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="newQuantityTypeInterfaceAlias"]
 ----

@@ -5,7 +5,7 @@
 This example shows how to define a new measurement unit, BMI.
 (BMI or body-mass-index is a widely used health statistic for measuring obesity).
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/BodyMassIndex.java[]
 ----

@@ -13,7 +13,7 @@ The default <number><space>[prefix]<unit> works OK, so this is all I will descri
 
 For example:
 
-[source,java]
+[source,java,indent=2]
 ----
   SimpleQuantityFormat f = SimpleQuantityFormat.getInstance();
   String output = f.parse(input).toString();
@@ -31,90 +31,64 @@ For example:
 |Extra space
 |[`6       m`]
 |6 m
-// exp=28.95 mm equal=false equivalent=true reparse=28.95 mm
+// exp=11 kV equal=false equivalent=false reparse=11.3 kV
 |Prefix
-|[`28.95 mm`]
-|28.95 mm
-// exp=15.6 MN equal=false equivalent=true reparse=15.6 MN
-|Prefix
-|[`15.6 MN`]
-|15.6 MN
-// exp=28.95 mm equal=false equivalent=true reparse=28.95 mm
-|Prefix
-|[`28.95 mm`]
-|28.95 mm
-// exp=11 kV equal=true equivalent=true reparse=11 kV
-|Prefix
-|[`11 kV`]
-|11 kV
+|[`11.3 kV`]
+|11.3 kV
 // exp=-1.6666666666666667 m equal=false equivalent=false reparse=-1.666666666666666666666666666666667 m
-|Rational
+|Rational number
 |[`-5÷3 m`]
 |-1.666666666666666666666666666666667 m
 // exp=11 N·m equal=true equivalent=true reparse=11 N·m
 |Compound
 |[`11 N·m`]
 |11 N·m
-// exp=11 m·N equal=true equivalent=true reparse=11 m·N
-|Compound
-|[`11 m·N`]
-|11 m·N
 // exp=6 m/s equal=true equivalent=true reparse=6 m/s
-|Compound
+|Inverted
 |[`6 m/s`]
 |6 m/s
-// exp=6 m/s² equal=false equivalent=false reparse=null
-|Powers
-|[`6 m/s/s`]
-|javax.measure.UnconvertibleException: javax.measure.IncommensurableException: m is not compatible with m/s²
-// exp=null equal=false equivalent=false reparse=null
-|Powers
-|[`6 m/s2`]
-|javax.measure.format.MeasurementParseException: unexpected token INTEGER
+// exp=6 m/s² equal=true equivalent=true reparse=6 m/s²
+|Inverted powers
+|[`6 m/s²`]
+|6 m/s²
 // exp=1013 kg/m³ equal=true equivalent=true reparse=1013 kg/m³
-|Powers
+|Repeated units
 |[`1013 kg/m·m·m`]
 |1013 kg/m³
 // exp=null equal=false equivalent=false reparse=null
 |Scientific
-|[`6 m·s-2`]
-|javax.measure.format.MeasurementParseException: unexpected token INTEGER
-// exp=null equal=false equivalent=false reparse=null
-|Compound
-|[`6 ONE/s`]
+|[`6 m·s⁻²`]
 |javax.measure.format.MeasurementParseException: Parse Error
 // exp=null equal=false equivalent=false reparse=null
-|Compound
+|Leading 1
 |[`6 1/s`]
 |javax.measure.format.MeasurementParseException: unexpected token INTEGER
-// exp=null equal=false equivalent=false reparse=null
-|Space not dot
-|[`11 m N`]
-|javax.measure.format.MeasurementParseException: unexpected token IDENTIFIER
-// exp=null equal=false equivalent=false reparse=null
-|Mixed radix
-|[`11 mo; 3 day 2 hr`]
-|java.lang.StringIndexOutOfBoundsException: begin 0, end 1, length 0
-
 |===
 
 *Notes*
 
 1. The prefix has no separator between it and the unit.
 
-2. There must be a middle dot (unicode X) (not dot, full space or small space) between compound units.
+2. There must be a Unicode middle dot (not dot, full space or small space) between compound units.
 
 3. Extra whitespace between the number and the unit is ignored.
 
-4. To use numerals to specify powers, use the unicode superscript digits X.
+4. To use numerals to specify powers, use the unicode superscript digits.
 
 5. In all cases, the output can be toString()ed and reparsed, and the result is equal and equivalent to the first parse result.
 
-If you have defined your own units, the parser can be extended to include them by:
+6. If you have defined your own units, the parser can be extended to include them by:
 
-[source,java]
+.Registering a unit symbol
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="extendparser"]
+----
+
+.Unicode symbols
+[source,java,indent=2]
+----
+include::{basedir}/src/main/java/Examples.java[tag="unicode"]
 ----
 
 If a particular string will not parse, try creating it using `getQuantity()` then compare the string with the `quantity.toString()` output.

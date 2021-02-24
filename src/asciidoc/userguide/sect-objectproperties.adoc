@@ -50,12 +50,12 @@ Compares this quantity against the specified object for strict equality (same un
 Similarly to the BigDecimal.equals(java.lang.Object) method which consider 2.0 and 2.00 as different objects because of different internal scales, quantities such as Quantities.getQuantity(3.0, KILOGRAM) Quantities.getQuantity(3, KILOGRAM) and Quantities.getQuantity("3 kg") might not be considered equals because of possible differences in their implementations.
 ____
 
-The 'might' is a fairly strong indication that the method should not be used, although in fact the example Quantitys are considered equal in {product}.
+The 'might' is a strong indication that the method should not be used, although in fact the example Quantitys are considered equal in {product}.
 
-Equivalence is the normal test to use: it converts to common units where possible, then compares the amounts and the dimensions of the quantities.
-This lets it work across different units of the same Quantity type, and even across systems of units.
+Equivalence is the normal test to use: it converts to common units, then compares the values.
+This lets it work across units from different systems of units, providing they are commensurable.footnote:[I am at my Java limits here, and making it up]
 
-Caveats:.footnote[I am at my Java limits here, and making it up]
+Caveats:
 
 - The amounts must be truly equal according to ({jdkjavadoc}/java/lang/Number.html[Number]): there is no method for "the same {plusminus} a bit".
 
@@ -63,10 +63,10 @@ Caveats:.footnote[I am at my Java limits here, and making it up]
 
 === Ordering
 
-Quantitys are not declared as comparable, but you can use them in Sorted Collections anyway:.footnote:[Quantity doesn't implement Comparable (Why not?) but get Quantity does, and all creation methods seem to delegate to it]
+Quantitys are not declared as comparable,footnote:[Why not?] but you can use them in Sorted Collections anyway.footnote:[Quantities.getQuantity() returns ComparableQuantity which does, and all creation methods seem to delegate to it]
 
 .Sorting quantities
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="collections"]
 ----
@@ -76,7 +76,7 @@ Sorting is by base value as you would hope.
 If you want to make explicit comparisons, declare or cast your Quantitys to `ComparableQuantity`:
 
 .Comparable
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="comparable"]
 ----
@@ -102,7 +102,7 @@ Yes, with some caveats.
 The text (`Quantity.toString()`) form is guaranteed to be convertible to and from the binary form without loss of precision.
 That is:
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="text"]
 ----

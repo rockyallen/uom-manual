@@ -7,7 +7,7 @@
 Any Quantity can be converted into an _equivalent_ Quantity in different (but _commensurable_) units using the `Quantity.to()` method.
 It results in a new `Quantity` Object:
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="siprefixes"]
 ----
@@ -19,7 +19,7 @@ If the units are not commensurable, you will be prevented from doing so with a c
 
 If you have to convert many primitive numbers, use a  `UnitConverter`:
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="converter"]
 ----

@@ -82,7 +82,7 @@ Some suggestions for improving speed:
 
 Define Units and frequently used constants just once:
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="constants"]
 ----
@@ -100,7 +100,7 @@ For some tasks, the UnitConverter class can be used to avoid the cost of creatin
 
 In numerically intensive code, use Quantities only at the input and output of your routines, then use primitives to do the actual sums.
 
-[source,java]
+[source,java,indent=2]
 ----
 Quantity<Power> method(Quantity<Mass> q_input) {
   double q_internal = q_input.to(METRE).getValue().doubleValue(); 
@@ -134,7 +134,7 @@ If you have many quantities of the same Unit, you can save space by only storing
 The following class is type-safe in that attempting to set a quantity that is not commensurable with the unit provided in the constructor will cause a run-time exception (+UnconvertibleException+).
 
 .DimensionedVector.java
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/DimensionedVector.java[tag="class"]
 ----
@@ -144,7 +144,7 @@ include::{basedir}/src/main/java/DimensionedVector.java[tag="class"]
 Each instance of the +ThermometerSample+ class below serialises as 8 bytes, but keeps the type-safety of Quantity.
 
 .ThermometerSample.java
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/ThermometerSample.java[tag="class"]
 ----

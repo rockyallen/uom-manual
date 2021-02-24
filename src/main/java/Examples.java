@@ -1,4 +1,5 @@
 
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -7,6 +8,8 @@ import javax.measure.Dimension;
 import javax.measure.MetricPrefix;
 import static javax.measure.MetricPrefix.CENTI;
 import static javax.measure.MetricPrefix.KILO;
+import static javax.measure.MetricPrefix.MEGA;
+import static javax.measure.MetricPrefix.MILLI;
 import javax.measure.UnitConverter;
 import javax.measure.quantity.Area;
 import javax.measure.quantity.Energy;
@@ -16,8 +19,6 @@ import javax.measure.quantity.Pressure;
 import javax.measure.spi.SystemOfUnits;
 import tech.units.indriya.format.SimpleUnitFormat;
 
-import static tech.units.indriya.unit.Units.METRE;
-import static tech.units.indriya.unit.Units.NEWTON;
 import static tech.units.indriya.unit.Units.CELSIUS;
 
 //import systems.uom.common.Imperial;
@@ -25,6 +26,7 @@ import static tech.units.indriya.unit.Units.CELSIUS;
 import javax.measure.Quantity;
 import javax.measure.Unit;
 import javax.measure.format.QuantityFormat;
+import javax.measure.format.UnitFormat;
 import javax.measure.quantity.Angle;
 import javax.measure.quantity.Dimensionless;
 import javax.measure.quantity.Force;
@@ -33,22 +35,33 @@ import javax.measure.quantity.Power;
 import javax.measure.quantity.Speed;
 import javax.measure.quantity.Temperature;
 import javax.measure.quantity.Time;
+import javax.measure.spi.FormatService;
+import javax.measure.spi.QuantityFactory;
+import javax.measure.spi.ServiceProvider;
+import javax.measure.spi.SystemOfUnitsService;
 import static tech.units.indriya.AbstractUnit.ONE;
 import tech.units.indriya.ComparableQuantity;
 import tech.units.indriya.format.SimpleQuantityFormat;
 import tech.units.indriya.function.MultiplyConverter;
+import tech.units.indriya.quantity.CompoundQuantity;
 import tech.units.indriya.quantity.Quantities;
 import static tech.units.indriya.quantity.Quantities.getQuantity;
 import tech.units.indriya.unit.AlternateUnit;
 import tech.units.indriya.unit.TransformedUnit;
+import tech.units.indriya.unit.UnitDimension;
 import tech.units.indriya.unit.Units;
-import static tech.units.indriya.unit.Units.GRAM;
+import static tech.units.indriya.unit.Units.HERTZ;
 import static tech.units.indriya.unit.Units.HOUR;
 import static tech.units.indriya.unit.Units.JOULE;
 import static tech.units.indriya.unit.Units.KELVIN;
+import static tech.units.indriya.unit.Units.KILOGRAM;
+import static tech.units.indriya.unit.Units.METRE;
+import static tech.units.indriya.unit.Units.MINUTE;
+import static tech.units.indriya.unit.Units.NEWTON;
 import static tech.units.indriya.unit.Units.RADIAN;
 import static tech.units.indriya.unit.Units.SECOND;
 import static tech.units.indriya.unit.Units.SQUARE_METRE;
+import static tech.units.indriya.unit.Units.VOLT;
 import static tech.units.indriya.unit.Units.WATT;
 import uom.bm.ObjectSizeFetcher;
 //end::import[]
@@ -113,6 +126,8 @@ public class Examples {
         temperatureSums();
         System.out.println("\ntext()");
         text();
+        System.out.println("\ntestParse()");
+        testParse();
 //        System.out.println("\nnewQuantityType()");
 //        newQuantityType();
         System.out.println("\nqtytypetest()");
@@ -121,7 +136,10 @@ public class Examples {
         asTypeIsRuntimeChecks();
         System.out.println("\nbmiTest()");
         BodyMassIndex.main(new String[]{});
-
+        System.out.println("\ntestSpi()");
+        testSpi();
+        System.out.println("\ntestManyRadix()");
+        testManyRadix();
     }
 
 // tag::useCentripetalForce[]
@@ -405,6 +423,7 @@ public class Examples {
         final Quantity<Yordinate> yordinate2 = Quantities.getQuantity(500, METRE).asType(Yordinate.class);
         //  incompatible type compiler message:
         // xordinate2.add(yordinate2);
+
     }
     //end::newQuantityTypeInterfaceAlias[]
 
@@ -414,5 +433,159 @@ public class Examples {
         } catch (java.lang.ClassCastException e) {
             System.out.println(e);  // java.lang.ClassCastException: The unit: W is not compatible with quantities of type interface javax.measure.quantity.Length
         }
+    }
+
+    public static final String multdot = String.valueOf(Character.toChars(0x22C5));
+
+    // tag::unicode[]
+    public static final String interpunct = String.valueOf(Character.toChars(0x00B7));
+    public static final String sup0 = String.valueOf(Character.toChars(0x2070));
+    public static final String sup1 = String.valueOf(Character.toChars(0x00B9));
+    public static final String sup2 = String.valueOf(Character.toChars(0x00B2));
+    public static final String sup3 = String.valueOf(Character.toChars(0x00B3));
+    public static final String sup4 = String.valueOf(Character.toChars(0x2074));
+    public static final String sup5 = String.valueOf(Character.toChars(0x2075));
+    public static final String sup6 = String.valueOf(Character.toChars(0x2076));
+    public static final String sup7 = String.valueOf(Character.toChars(0x2077));
+    public static final String sup8 = String.valueOf(Character.toChars(0x2078));
+    public static final String sup9 = String.valueOf(Character.toChars(0x2079));
+    public static final String supMinus = String.valueOf(Character.toChars(0x207B));
+    // end::unicode[]
+
+    public void testParse() {
+        System.out.println("testParse");
+        System.out.println("|===");
+        System.out.println("|Case |Input |Output\n");
+        formatHelper("Simple", "6 m", null, 6, METRE, "6 m");
+        formatHelper("Extra space", "6       m", null, 6, METRE, "6 m");
+//        formatHelper("Prefix", "15.6 MN", null, 15.6, MEGA(NEWTON), "15.6 MN");
+//        formatHelper("Prefix", "28.95 mm", null, 28.95, MILLI(METRE), "28.95 mm");
+        formatHelper("Prefix", "11.3 kV", null, 11, KILO(VOLT), "11.3 kV");
+        formatHelper("Rational number", "-5÷3 m", null, -5.0 / 3.0, METRE, "-1.666666666666666666666666666666667 m");
+
+        formatHelper("Compound", "11 N" + interpunct + "m", null, 11, NEWTON.multiply(METRE), "11 N·m");
+
+        formatHelper("Inverted", "6 m/s", null, 6, METRE.divide(SECOND), "6 m");
+        
+        //formatHelper("Powers", "6 m/s/s", null, 6, METRE.divide(SECOND).divide(SECOND), "6 m/s2");
+        formatHelper("Inverted powers", "6 m/s"+sup2, null, 6, METRE.divide(SECOND).divide(SECOND), "6 m/s2");
+        formatHelper("Repeated units", "1013 kg/m·m·m", null, 1013, KILOGRAM.divide(METRE).divide(METRE).divide(METRE), "6 kg/m3");
+        //formatHelper("Powers", "1013 kg/m"+sup3, null, 1013, KILOGRAM.divide(METRE).divide(METRE).divide(METRE), "1013 kg/m3");
+        formatHelper("Scientific", "6 m"+interpunct+"s"+supMinus+sup2, null, 6, METRE.divide(SECOND).divide(SECOND), "6 m/s2");
+        //formatHelper("Compound", "6 ONE/s", null, 6, HERTZ, "6 Hz");
+        formatHelper("Leading 1", "6 1/s", null, 6, HERTZ, "6 Hz");
+//        formatHelper("Mixed radix", "11 mo; 3 day 2 hr", "n u ~;", 0, null, "11 mol; 3 day 2 hr");
+//        formatHelper("28.95 mm", "n u ~;", 28.95, MILLI(METRE), "28.95 mm");
+//        formatHelper("28.95 mm", "n u", 28.95, MILLI(METRE), "28.95 mm");
+//        formatHelper("1 m; 27 cm", "n  u ~; ", 0, null, "1 m; 27 cm");
+//        formatHelper("28.95 mm", "nnnnnn u", 28.95, MILLI(METRE), "28.95 mm");
+//        formatHelper("28.95 cm", "n u", 28.95, CENTI(METRE), "cm 28.95");
+//        formatHelper("1 min", "n u", 1, MINUTE, "1 min");
+//        formatHelper("30 s", "n u", 30, SECOND, "30 s");
+//        formatHelper("1 min; 30 s", "n u ~;", 28.95, MILLI(METRE), "1 min; 30 s");
+//        formatHelper("28.95_mm", "n_u", 28.95, MILLI(METRE), "28.95_mm");
+        //formatHelper("Space not dot", "11 m N", null, 11, METRE.multiply(NEWTON), "11 m·N");
+        System.out.println("|===");
+    }
+
+    public void formatHelper(String caseLabel, String input, String fmt, double expectVal, Unit expectUnit, String expectOut) {
+        SimpleQuantityFormat f = (fmt == null ? SimpleQuantityFormat.getInstance() : SimpleQuantityFormat.getInstance(fmt));
+
+        Quantity expectedQuantity = null;
+        Quantity parsed = null;
+        Quantity reparsed = null;
+        boolean equivalent = false;
+        boolean equal = false;
+        String restringed = null;
+        Exception eParse = null;
+        Exception eReparse = null;
+
+        try {
+            parsed = f.parse(input);
+            if (expectUnit != null) {
+                expectedQuantity = Quantities.getQuantity(expectVal, expectUnit);
+                equivalent = expectedQuantity.isEquivalentTo(parsed);
+                equal = expectedQuantity.equals(parsed);
+            }
+
+            try {
+                restringed = parsed.toString();
+                reparsed = f.parse(restringed);
+            } catch (Exception ex) {
+                eReparse = ex;
+            }
+        } catch (Exception ex) {
+            eParse = ex;
+        }
+
+        System.out.println("// exp=" + expectedQuantity + " equal=" + equal + " equivalent=" + equivalent + " reparse=" + reparsed);
+
+        System.out.println("|" + caseLabel);
+        System.out.println("|[`" + input + "`]");
+        if (eParse == null) {
+            System.out.println("|" + parsed);
+        } else {
+            System.out.println("|" + eParse);
+        }
+    }
+
+    public void testSpi() {
+
+        // List the available prodiders
+        for (ServiceProvider sp : ServiceProvider.available()) {
+            {
+                describeServiceProvider(sp);
+            }
+        }
+    }
+
+    private void describeServiceProvider(ServiceProvider sp) {
+        System.out.println(sp);
+
+// Get the default provider
+        //ServiceProvider.current();
+        // FORMATTING
+        // Get the service
+        FormatService formatService = sp.getFormatService();
+
+        // Get the default formatter
+        QuantityFormat qFormat = formatService.getQuantityFormat();
+
+        // Get a named formatter
+        QuantityFormat nsFormat = formatService.getQuantityFormat("NumberSpace");
+
+        UnitFormat uf = formatService.getUnitFormat();
+
+        // SYSTEM OF UNITS
+        // Get the service
+        //List<String> names = formatService.getAvailableFormatNames();
+        SystemOfUnitsService sus = sp.getSystemOfUnitsService();
+
+        for (SystemOfUnits sou : sus.getAvailableSystemsOfUnits()) {
+            System.out.println(sou);
+            for (Unit u : sou.getUnits()) {
+                System.out.println(u.getName() + ":" + u.getSymbol() + ":" + u.getDimension() + ":" + u.getBaseUnits() + ":" + u.getSystemUnit());
+            }
+            sou.getUnits(UnitDimension.TIME);
+
+            for (Field f : UnitDimension.class.getFields()) {
+                System.out.println(f);
+                //sou.getUnits((Dimension)f.getType());
+            }
+
+        }
+
+        // Quantity factories
+        QuantityFactory<Length> qf = sp.getQuantityFactory(Length.class);
+        System.out.println(qf.getSystemUnit());
+    }
+
+    public void testManyRadix() {
+        // tag::manyradix[]
+        System.out.println("testManyRadix");
+        CompoundQuantity cq = CompoundQuantity.of(getQuantity(2, HOUR), getQuantity(10, MINUTE), getQuantity(30, SECOND));
+        System.out.println(cq); // "2 h 10 min 30 s"
+        System.out.println(cq.to(MINUTE)); // "130.5 min"
+        // end::manyradix[]
     }
 }

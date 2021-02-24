@@ -42,14 +42,14 @@ for example, after you have defined a unit, it automatically becomes available t
 Only the un-prefixed units are provided in the library.
 Create others as you need them:
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="siprefixes"]
 ----
 
 Or if you only want them occasionally, use them anonymously (but see xref:sect-performance[]):
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="siprefixesdirect"]
 ----
@@ -59,7 +59,7 @@ include::{basedir}/src/main/java/Examples.java[tag="siprefixesdirect"]
 AlternateUnit makes a new unit by applying linear scaling to an existing one.
 The new unit has the same dimensions, but a different symbol and scale.
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="alternateUnit"]
 ----
@@ -69,7 +69,7 @@ include::{basedir}/src/main/java/Examples.java[tag="alternateUnit"]
 ProductUnit makes a new unit created as the product of rational powers of other units.
 The new unit has dimensions calculated from the combination of the other units.
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="productUnit"]
 ----
@@ -78,7 +78,7 @@ include::{basedir}/src/main/java/Examples.java[tag="productUnit"]
 
 You can use the fact that arithmetic operations manage units for you:
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="implicitunits"]
 ----

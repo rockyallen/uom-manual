@@ -8,7 +8,7 @@
 
 Here’s a simple use of a physical quantity with JScience, in this example Length:
 
-[source,java]
+[source,java,indent=2]
 ----
 import org.jscience.physics.amount.Amount;
  
@@ -24,7 +24,7 @@ final double d_metre = d.doubleValue(METRE);
 
 And here’s the equivalent code using Units API 2.0 and Indriya:
 
-[source,java]
+[source,java,indent=2]
 ----
 import tech.units.indriya.quantity.Quantities;
  
@@ -81,7 +81,7 @@ Here’s how this looks in JScience versus Unit API:
 
 With JScience:
 
-[source,java]
+[source,java,indent=2]
 ----
 Amount<Area> a = Amount.valueOf(100, SQUARE_METRE);
 Amount<Length> b = Amount.valueOf(10, METRE);
@@ -90,7 +90,7 @@ Amount<Length> c = a.divide(b).to(METRE);
 
 With Unit API:
 
-[source,java]
+[source,java,indent=2]
 ----
 Quantity<Area> a = Quantities.getQuantity(100, SQUARE_METRE);
 Quantity<Length> b = Quantities.getQuantity(10, METRE);
@@ -107,7 +107,7 @@ The Quantities.getQuantity() factory method returns a ComparableQuantity, which 
 Defining custom units is very similar to JScience. 
 Here’s an example for degree (angle), which is not an SI unit:
 
-[source,java]
+[source,java,indent=2]
 ----
 public static final Unit<Angle> DEGREE_ANGLE =
     new TransformedUnit<>("°", RADIAN,

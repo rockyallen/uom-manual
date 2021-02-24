@@ -21,14 +21,14 @@ Next, we'll create a Java class that will create your first quantity, the speed 
 Let's start by creating a new class in a package of your choice. 
 In that class, import the following types in order to create a new speed quantity:
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Minimal.java[tag="import"]
 ----
 
 In order to keep things simple, we'll create the quantity in the class's `main` method, and print it out immediately.
 
-[source,java]
+[source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Minimal.java[tag="main"]
 ----
