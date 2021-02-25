@@ -1,0 +1,865 @@
+
+
+
+= Service provider: Default
+
+== Unit Formatters
+- "EBNF"
+- "Local"
+- "ASCII"
+- "Default"
+
+=== "EBNF"
+.Test results
+[options=header]
+|===
+
+|Case |Input |Output
+
+
+|Simple
+|[`m`]
+|m
+|Prefix
+|[`kV`]
+|kV
+|Compound
+|[`N·m`]
+|N·m
+|Inverted
+|[`m/s`]
+|m/s
+|Inverted powers
+|[`m/s²`]
+|m/s²
+|Repeated units
+|[`kg/m·m·m`]
+|kg·m
+|Scientific
+|[`m·s⁻²`]
+|javax.measure.format.MeasurementParseException: tech.units.indriya.format.TokenException: 
+|Leading 1
+|[`1/s`]
+|1/s
+|Parentheses
+|[`k(W·h)`]
+|javax.measure.format.MeasurementParseException: tech.units.indriya.format.TokenException: 
+|Ohm
+|[`Ω`]
+|Ω
+|mOhm
+|[`mΩ`]
+|mΩ
+|Micro
+|[`µV`]
+|μV
+|Ascii
+|[`N m`]
+|java.lang.IllegalArgumentException: Lexical error at line 1, column 2.  Encountered: " " (32), after : ""
+|Ascii
+|[`Ohm`]
+|javax.measure.format.MeasurementParseException: tech.units.indriya.format.TokenException: 
+|Ascii
+|[`micro Ohm`]
+|javax.measure.format.MeasurementParseException: tech.units.indriya.format.TokenException: 
+
+|===
+
+=== "Local"
+.Test results
+[options=header]
+|===
+
+|Case |Input |Output
+
+
+|Simple
+|[`m`]
+|m
+|Prefix
+|[`kV`]
+|kV
+|Compound
+|[`N·m`]
+|N·m
+|Inverted
+|[`m/s`]
+|m/s
+|Inverted powers
+|[`m/s²`]
+|m/s²
+|Repeated units
+|[`kg/m·m·m`]
+|kg·m
+|Scientific
+|[`m·s⁻²`]
+|java.lang.IllegalArgumentException: tech.units.indriya.format.TokenException: 
+|Leading 1
+|[`1/s`]
+|1/s
+|Parentheses
+|[`k(W·h)`]
+|java.lang.IllegalArgumentException: tech.units.indriya.format.TokenException: 
+|Ohm
+|[`Ω`]
+|Ω
+|mOhm
+|[`mΩ`]
+|mΩ
+|Micro
+|[`µV`]
+|μV
+|Ascii
+|[`N m`]
+|javax.measure.format.MeasurementParseException: tech.units.indriya.format.TokenMgrError: Lexical error at line 1, column 2.  Encountered: " " (32), after : ""
+|Ascii
+|[`Ohm`]
+|java.lang.IllegalArgumentException: tech.units.indriya.format.TokenException: 
+|Ascii
+|[`micro Ohm`]
+|java.lang.IllegalArgumentException: tech.units.indriya.format.TokenException: 
+
+|===
+
+=== "ASCII"
+.Test results
+[options=header]
+|===
+
+|Case |Input |Output
+
+
+|Simple
+|[`m`]
+|m
+|Prefix
+|[`kV`]
+|kV
+|Compound
+|[`N·m`]
+|N·m
+|Inverted
+|[`m/s`]
+|m/s
+|Inverted powers
+|[`m/s²`]
+|m/s²
+|Repeated units
+|[`kg/m·m·m`]
+|kg/m³
+|Scientific
+|[`m·s⁻²`]
+|javax.measure.format.MeasurementParseException: Parse Error
+|Leading 1
+|[`1/s`]
+|javax.measure.format.MeasurementParseException: unexpected token INTEGER
+|Parentheses
+|[`k(W·h)`]
+|javax.measure.format.MeasurementParseException: Parse Error
+|Ohm
+|[`Ω`]
+|Ω
+|mOhm
+|[`mΩ`]
+|mΩ
+|Micro
+|[`µV`]
+|μV
+|Ascii
+|[`N m`]
+|javax.measure.format.MeasurementParseException: unexpected token IDENTIFIER
+|Ascii
+|[`Ohm`]
+|Ω
+|Ascii
+|[`micro Ohm`]
+|javax.measure.format.MeasurementParseException: Parse Error
+
+|===
+
+=== "Default"
+.Test results
+[options=header]
+|===
+
+|Case |Input |Output
+
+
+|Simple
+|[`m`]
+|m
+|Prefix
+|[`kV`]
+|kV
+|Compound
+|[`N·m`]
+|N·m
+|Inverted
+|[`m/s`]
+|m/s
+|Inverted powers
+|[`m/s²`]
+|m/s²
+|Repeated units
+|[`kg/m·m·m`]
+|kg/m³
+|Scientific
+|[`m·s⁻²`]
+|javax.measure.format.MeasurementParseException: Parse Error
+|Leading 1
+|[`1/s`]
+|javax.measure.format.MeasurementParseException: unexpected token INTEGER
+|Parentheses
+|[`k(W·h)`]
+|javax.measure.format.MeasurementParseException: Parse Error
+|Ohm
+|[`Ω`]
+|Ω
+|mOhm
+|[`mΩ`]
+|mΩ
+|Micro
+|[`µV`]
+|μV
+|Ascii
+|[`N m`]
+|javax.measure.format.MeasurementParseException: unexpected token IDENTIFIER
+|Ascii
+|[`Ohm`]
+|Ω
+|Ascii
+|[`micro Ohm`]
+|javax.measure.format.MeasurementParseException: Parse Error
+
+|===
+
+== Quantity Formatters
+- "EBNF"
+- "Local"
+- "NumberDelimiter"
+- "Simple"
+
+=== "EBNF"
+.Test results
+[options=header]
+|===
+
+|Case |Input |Output
+
+
+|Simple
+|[`6 m`]
+|6 m
+|Extra space
+|[`6       m`]
+|javax.measure.UnconvertibleException: javax.measure.IncommensurableException: one is not compatible with m
+|Prefix
+|[`11.3 kV`]
+|11.3 kV
+|Rational number
+|[`-5÷3 m`]
+|-5 m
+|Compound
+|[`11 N·m`]
+|11 N·m
+|Inverted
+|[`6 m/s`]
+|6 m/s
+|Inverted powers
+|[`6 m/s²`]
+|6 m/s²
+|Repeated units
+|[`1013 kg/m·m·m`]
+|javax.measure.UnconvertibleException: javax.measure.IncommensurableException: kg·m is not compatible with kg/m³
+|Scientific
+|[`6 m·s⁻²`]
+|javax.measure.format.MeasurementParseException: tech.units.indriya.format.TokenException: 
+|Leading 1
+|[`6 1/s`]
+|6 1/s
+
+|===
+
+=== "Local"
+.Test results
+[options=header]
+|===
+
+|Case |Input |Output
+
+
+|Simple
+|[`6 m`]
+|6 m
+|Extra space
+|[`6       m`]
+|javax.measure.UnconvertibleException: javax.measure.IncommensurableException: one is not compatible with m
+|Prefix
+|[`11.3 kV`]
+|11.3 kV
+|Rational number
+|[`-5÷3 m`]
+|-5 m
+|Compound
+|[`11 N·m`]
+|11 N·m
+|Inverted
+|[`6 m/s`]
+|6 m/s
+|Inverted powers
+|[`6 m/s²`]
+|6 m/s²
+|Repeated units
+|[`1013 kg/m·m·m`]
+|javax.measure.UnconvertibleException: javax.measure.IncommensurableException: kg·m is not compatible with kg/m³
+|Scientific
+|[`6 m·s⁻²`]
+|java.lang.IllegalArgumentException: tech.units.indriya.format.TokenException: 
+|Leading 1
+|[`6 1/s`]
+|6 1/s
+
+|===
+
+=== "NumberDelimiter"
+.Test results
+[options=header]
+|===
+
+|Case |Input |Output
+
+
+|Simple
+|[`6 m`]
+|6 m
+|Extra space
+|[`6       m`]
+|javax.measure.UnconvertibleException: javax.measure.IncommensurableException: one is not compatible with m
+|Prefix
+|[`11.3 kV`]
+|11.3 kV
+|Rational number
+|[`-5÷3 m`]
+|-5 m
+|Compound
+|[`11 N·m`]
+|11 N·m
+|Inverted
+|[`6 m/s`]
+|6 m/s
+|Inverted powers
+|[`6 m/s²`]
+|6 m/s²
+|Repeated units
+|[`1013 kg/m·m·m`]
+|1013 kg/m³
+|Scientific
+|[`6 m·s⁻²`]
+|javax.measure.format.MeasurementParseException: Parse Error
+|Leading 1
+|[`6 1/s`]
+|javax.measure.format.MeasurementParseException: unexpected token INTEGER
+
+|===
+
+=== "Simple"
+.Test results
+[options=header]
+|===
+
+|Case |Input |Output
+
+
+|Simple
+|[`6 m`]
+|6 m
+|Extra space
+|[`6       m`]
+|6 m
+|Prefix
+|[`11.3 kV`]
+|11.3 kV
+|Rational number
+|[`-5÷3 m`]
+|-1.666666666666666666666666666666667 m
+|Compound
+|[`11 N·m`]
+|11 N·m
+|Inverted
+|[`6 m/s`]
+|6 m/s
+|Inverted powers
+|[`6 m/s²`]
+|6 m/s²
+|Repeated units
+|[`1013 kg/m·m·m`]
+|1013 kg/m³
+|Scientific
+|[`6 m·s⁻²`]
+|javax.measure.format.MeasurementParseException: Parse Error
+|Leading 1
+|[`6 1/s`]
+|javax.measure.format.MeasurementParseException: unexpected token INTEGER
+
+|===
+
+== Systems of Units
+- Units
+
+=== Units
+
+.Units provided by SystemOfUnits
+[options=header]
+|===
+|Name |Symbol |Dimension |Base units |System unit
+
+|Siemens
+
+|S
+
+|[I]²·[T]³/([L]²·[M])
+
+|{A=1, V=-1}
+
+|S
+
+|null
+
+|
+
+|one
+
+|{}
+
+|one
+
+|Percent
+
+|%
+
+|one
+
+|{}
+
+|one
+
+|Lux
+
+|lx
+
+|[J]/[L]²
+
+|{lm=1, m=-2}
+
+|lx
+
+|Litre
+
+|l
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|null
+
+|null
+
+|[L]²
+
+|{m=2}
+
+|m²
+
+|Sievert
+
+|Sv
+
+|[L]²/[T]²
+
+|{J=1, kg=-1}
+
+|Sv
+
+|Hour
+
+|h
+
+|[T]
+
+|null
+
+|s
+
+|Year
+
+|y
+
+|[T]
+
+|null
+
+|s
+
+|Metre
+
+|m
+
+|[L]
+
+|null
+
+|m
+
+|Newton
+
+|N
+
+|[L]·[M]/[T]²
+
+|{m=1, kg=1, s=-2}
+
+|N
+
+|Candela
+
+|cd
+
+|[J]
+
+|null
+
+|cd
+
+|Kilogram
+
+|kg
+
+|[M]
+
+|null
+
+|kg
+
+|Second
+
+|s
+
+|[T]
+
+|null
+
+|s
+
+|Watt
+
+|W
+
+|[L]²·[M]/[T]³
+
+|{J=1, s=-1}
+
+|W
+
+|Tesla
+
+|T
+
+|[M]/([T]²·[I])
+
+|{Wb=1, m=-2}
+
+|T
+
+|Katal
+
+|kat
+
+|[N]/[T]
+
+|{mol=1, s=-1}
+
+|kat
+
+|Volt
+
+|V
+
+|[L]²·[M]/([T]³·[I])
+
+|{W=1, A=-1}
+
+|V
+
+|Month
+
+|mo
+
+|[T]
+
+|null
+
+|s
+
+|Kelvin
+
+|K
+
+|[Θ]
+
+|null
+
+|K
+
+|null
+
+|null
+
+|[L]/[T]
+
+|{m=1, s=-1}
+
+|m/s
+
+|Ohm
+
+|Ω
+
+|[L]²·[M]/([T]³·[I]²)
+
+|{V=1, A=-1}
+
+|Ω
+
+|null
+
+|null
+
+|[L]/[T]
+
+|{m=1, s=-1}
+
+|m/s
+
+|Mole
+
+|mol
+
+|[N]
+
+|null
+
+|mol
+
+|null
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|Day
+
+|d
+
+|[T]
+
+|null
+
+|s
+
+|Coulomb
+
+|C
+
+|[T]·[I]
+
+|{s=1, A=1}
+
+|C
+
+|null
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|Week
+
+|wk
+
+|[T]
+
+|null
+
+|s
+
+|Ampere
+
+|A
+
+|[I]
+
+|null
+
+|A
+
+|Weber
+
+|Wb
+
+|[L]²·[M]/([T]²·[I])
+
+|{V=1, s=1}
+
+|Wb
+
+|Henry
+
+|H
+
+|[L]²·[M]/([T]²·[I]²)
+
+|{Wb=1, A=-1}
+
+|H
+
+|Hertz
+
+|Hz
+
+|1/[T]
+
+|{s=-1}
+
+|Hz
+
+|Pascal
+
+|Pa
+
+|[M]/([L]·[T]²)
+
+|{N=1, m=-2}
+
+|Pa
+
+|Minute
+
+|min
+
+|[T]
+
+|null
+
+|s
+
+|Becquerel
+
+|Bq
+
+|1/[T]
+
+|{s=-1}
+
+|Bq
+
+|Radian
+
+|rad
+
+|one
+
+|{}
+
+|rad
+
+|Celsius
+
+|℃
+
+|[Θ]
+
+|null
+
+|K
+
+|null
+
+|null
+
+|[L]/[T]²
+
+|{m=1, s=-2}
+
+|m/s²
+
+|Lumen
+
+|lm
+
+|[J]
+
+|{cd=1, sr=1}
+
+|lm
+
+|Gray
+
+|Gy
+
+|[L]²/[T]²
+
+|{J=1, kg=-1}
+
+|Gy
+
+|Joule
+
+|J
+
+|[L]²·[M]/[T]²
+
+|{N=1, m=1}
+
+|J
+
+|Farad
+
+|F
+
+|[T]^4·[I]²/([L]²·[M])
+
+|{C=1, V=-1}
+
+|F
+
+|Steradian
+
+|sr
+
+|one
+
+|{}
+
+|sr
+
+
+|===
+
+
+== Quantity Factories
+Length: :tech.units.indriya.quantity.DefaultQuantityFactory <javax.measure.quantity.Length>
+
+Mass: :tech.units.indriya.quantity.DefaultQuantityFactory <javax.measure.quantity.Length>
+
+etc

@@ -319,8 +319,8 @@ public class UnitsTest {
     }
 
     @Test
-    public void testSerialsationQ() throws IOException, ClassNotFoundException {
-        System.out.println("testSerialsationQ()");
+    public void testSerialsationOfQuantity() throws IOException, ClassNotFoundException {
+        System.out.println("testSerialsationOfQuantity()");
 
         int sample = 1000;
         ComparableQuantity[] instance = new ComparableQuantity[sample];

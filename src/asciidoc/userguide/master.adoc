@@ -95,3 +95,6 @@ include::sect-jscience.adoc[]
 include::sect-errormessages.adoc[]
 
 include::appendix-predefinedunits.adoc[]
+
+[appendix]
+include::spi.adoc[leveloffset=+1]

@@ -30,3 +30,6 @@ The asType(Class) method, which can be applied on a Unit or Quantity instance, c
 has the dimension of a given quantity, specified as a Class object. If the unit doesn't have the correct dimension,
 then a ClassCastException is thrown. This check allows for earlier dimension mismatch detection compared to
 the unchecked casts, which will throw an exception only when a unit conversion is first requested.
+
+IllegalArgumentException::
+  On some arithmetic errors (xref:sect-arithmetic[])

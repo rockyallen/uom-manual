@@ -114,15 +114,15 @@ Quantity<Power> method(Quantity<Mass> q_input) {
 .Space requirements comparison
 [options=header]
 |===
-|Class |Instance |Bytes
+|Class |Instance |Bytes |Note
 
-|double|Any|8
+|double|Any|8 |Fixed
 
-|long|Any|8
+|long|Any|8 |Fixed
 
-|BigDecimal|1923.5|32
+|BigDecimal|1923.5|32 |Fixed
 
-|Quantity|1923.5 W|22
+|Quantity|1923.5 W|22 |Variable 20-60
 
 |===
 
