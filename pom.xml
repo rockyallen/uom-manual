@@ -7,26 +7,41 @@
     <packaging>jar</packaging>
     <dependencies>
         
-        <dependency>
-            <groupId>org.openjdk.jmh</groupId>
-            <artifactId>jmh-core</artifactId>
-            <version>1.27</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjdk.jmh</groupId>
-            <artifactId>jmh-generator-annprocess</artifactId>
-            <version>1.27</version>
-        </dependency>
         <!-- tag::dependency[] -->
         <dependency>
             <groupId>tech.units</groupId>
             <artifactId>indriya</artifactId>
-            <version>2.1.1</version>
+            <version>2.1</version> <!-- 2.1.2 FAILS against si-quantity -->
             <type>jar</type>
             <scope>compile</scope>
         </dependency>        
         <!-- end::dependency[] -->
+        <!-- https://mvnrepository.com/artifact/si.uom/si-quantity -->
         
+        <dependency>
+            <groupId>si.uom</groupId>
+            <artifactId>si-quantity</artifactId>
+            <version>2.0.1</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+    
+        <dependency>
+            <groupId>systems.uom</groupId>
+            <artifactId>systems-common</artifactId>
+            <version>2.0.2</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>        
+
+        <dependency>
+            <groupId>systems.uom</groupId>
+            <artifactId>systems-quantity</artifactId>
+            <version>2.0.2</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency> 
+               
         <!-- POMs don't seem to work in NetBeans Maven. Load them directly. -->
         <!-- https://bintray.com/asciidoctor/maven/asciidoctorj-api/view/general -->
         <dependency>
@@ -36,6 +51,8 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        
+        
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -52,6 +69,20 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.6.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>1.27</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>1.27</version>
+            <type>jar</type>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -106,7 +137,7 @@
                 <executions>
                     <execution>
                         <id>output-html</id>              
-                        <phase>generate-resources</phase> 
+                        <phase>prepare-package</phase> 
                         <goals>
                             <goal>process-asciidoc</goal> 
                         </goals>
@@ -120,7 +151,7 @@
                     </execution>
                     <execution>
                         <id>output-pdf</id>              
-                        <phase>generate-resources</phase> 
+                        <phase>prepare-package</phase> 
                         <goals>
                             <goal>process-asciidoc</goal> 
                         </goals>
@@ -142,6 +173,7 @@
                 <version>3.0.0-M5</version> 
                 <configuration> 
                     <skipAfterFailureCount>100</skipAfterFailureCount> 
+                    <testFailureIgnore>true</testFailureIgnore>                
                 </configuration> 
             </plugin> 
         </plugins>

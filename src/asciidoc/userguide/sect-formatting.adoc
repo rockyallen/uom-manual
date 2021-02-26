@@ -3,21 +3,40 @@
 == Formatting
 
 [WARNING]
-According to the Javadocs, the parser should be configurable for the number-unit separator and the multiple-radix separators, but I can't get it to work.
+According to the Javadocs, SimpleQuantityFormat should be configurable for the number-unit separator and the multiple-radix separators, but I can't get it to work.
 The default <number><space>[prefix]<unit> works OK, so this is all I will describe until I work out what is going on.
 
 Formatting is an exact reversal of parsing.
 See the previous table for examples.
 
+In {product}, the `Quantity.toString()` method  delegates to SimpleQuantityFormat.
+If you want to use one of the other formatters you have to call its format() methods explicitly.
 
-[[sect-formattingunits]]
-=== Formatting Units
+=== Formatters
 
-Unit Formatting
-The UnitFormat interface allows to format a given unit into an Appendable and parse a specified CharSequence
-to produce a Unit. It also offers a simplified format() method returning a String. If there is no unit to parse, a
-dimensionless unitary unit is returned.
+SimpleQuantityFormat::
+  The default used for toString() in {product}. 
+Not locale-sensitive. 
+Number is printed to full precision.
 
+NumberDelimiterQuantityFormat::
+  The decimal number format, separator, and unit format are independently controllable.
+The best option for presentation to users.
+Since the number precision is variable, not suitable as a storage format.
+
+Example:
+
+NumberDelimiterQuantityFormat example
+[source,java,indent=2]
+----
+TBD
+----
+
+=== Locale
+
+TBD
+
+////
 In addition, there are 2 methods, label() and isLocalSensitive(), both assisting format and parse on different
 environments. label() attaches a “system-wide” 12 label to the specified unit. Especially for units that have no
 symbol or name (e.g. product of units), this offers a standard way to assign a display label to a unit. It also
@@ -28,12 +47,18 @@ is locale-insensitive while other implementations like LocalUnitFormat are local
 implementation isLocalSensitive(), it usually provides at least one instance for a given Locale or equivalent.
 There, label() will only affect that particular instance and has to be applied for all supported languages or
 locales.
+////
+
+////
+[[sect-formattingunits]]
+=== Formatting Units
+
+Unit Formatting
+The UnitFormat interface allows to format a given unit into an Appendable and parse a specified CharSequence
+to produce a Unit. It also offers a simplified format() method returning a String. If there is no unit to parse, a
+dimensionless unitary unit is returned.
+
 
 [[sect-formattingquantities]]
 === Formatting Quantitys
-
-- How do I control the number format? (, space, sig figure, decimal places)
-
-- How do I prepend (rather than append) the units? ie £
-
-
+////

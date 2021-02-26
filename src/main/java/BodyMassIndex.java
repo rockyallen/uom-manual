@@ -30,13 +30,13 @@ public class BodyMassIndex {
     public static final Unit<Bmi> bmi_unit
             = new AlternateUnit<Bmi>(Units.KILOGRAM.divide(Units.METRE.pow(2)), "BMI");
 
-    // Register the symbol with the parser so that it knows how to convert string 
+    // Register the symbol with the parser so that it knows how to parse string form
     static {
         SimpleUnitFormat.getInstance().label(bmi_unit, "BMI");
     }
 
     /**
-     * Provide some useful constants
+     * Some useful constants
      */
     public static final Quantity<Bmi> UNDERWEIGHT
             = Quantities.getQuantity(18.5, bmi_unit);
@@ -49,8 +49,9 @@ public class BodyMassIndex {
 
     /**
      * Utility method to create one. Note the return type is ComparableQuantity
-     * because I expect to want it to be used for comparisons. How can I get rid
-     * of the cast?
+     * because I expect it to be used for comparisons.
+     *
+     * How can I get rid of the cast?
      */
     public static ComparableQuantity<Bmi> bmi(Quantity<Mass> mass,
             Quantity<Length> height) {
@@ -97,7 +98,6 @@ public class BodyMassIndex {
         try {
             bmi5.to(bmi_unit);
         } catch (javax.measure.UnconvertibleException ex) {
-            System.out.println("Success");
         }
 
         // 6. Use it in an application

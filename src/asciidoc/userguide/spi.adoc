@@ -1,14 +1,22 @@
 
 
-
+[[appendix-spi-Default]]
+[appendix]
 = Service provider: Default
 
-== Unit Formatters
-- "EBNF"
-- "Local"
-- "ASCII"
-- "Default"
+[[sect-unitformatters]]
 
+== Unit Formatters
+- "xref:sect-unitformatters-EBNF[EBNF]"
+
+- "xref:sect-unitformatters-Local[Local]"
+
+- "xref:sect-unitformatters-ASCII[ASCII]"
+
+- "xref:sect-unitformatters-Default[Default]"
+
+
+[[sect-unitformatters-EBNF]]
 === "EBNF"
 .Test results
 [options=header]
@@ -41,30 +49,54 @@
 |Leading 1
 |[`1/s`]
 |1/s
-|Parentheses
-|[`k(W·h)`]
+|Leading 1 (fudge)
+|[`one/s`]
 |javax.measure.format.MeasurementParseException: tech.units.indriya.format.TokenException: 
+|Multiple units
+|[`m·A·W·h`]
+|m·A·W·h
+|Parentheses
+|[`N(W·h)`]
+|javax.measure.format.MeasurementParseException: tech.units.indriya.format.TokenException: Encountered " "(" "( "" at line 1, column 2.
+Was expecting one of:
+    <EOF> 
+    "+" ...
+    "-" ...
+    "*" ...
+    "\u00b7" ...
+    "/" ...
+    "^" ...
+    ":" ...
+    <SUPERSCRIPT_INTEGER> ...
+    
 |Ohm
 |[`Ω`]
 |Ω
 |mOhm
 |[`mΩ`]
 |mΩ
-|Micro
+|Micro (0x00B5)
 |[`µV`]
 |μV
-|Ascii
+|Micro (0x03BC)
+|[`μV`]
+|javax.measure.format.MeasurementParseException: tech.units.indriya.format.TokenException: 
+|Ascii simple
+|[`Nm`]
+|javax.measure.format.MeasurementParseException: tech.units.indriya.format.TokenException: 
+|Ascii simple
 |[`N m`]
 |java.lang.IllegalArgumentException: Lexical error at line 1, column 2.  Encountered: " " (32), after : ""
-|Ascii
+|Ascii symbol
 |[`Ohm`]
 |javax.measure.format.MeasurementParseException: tech.units.indriya.format.TokenException: 
-|Ascii
-|[`micro Ohm`]
+|Ascii prefix
+|[`microOhm`]
 |javax.measure.format.MeasurementParseException: tech.units.indriya.format.TokenException: 
 
 |===
 
+[[sect-unitformatters-Local]]
 === "Local"
 .Test results
 [options=header]
@@ -97,30 +129,54 @@
 |Leading 1
 |[`1/s`]
 |1/s
-|Parentheses
-|[`k(W·h)`]
+|Leading 1 (fudge)
+|[`one/s`]
 |java.lang.IllegalArgumentException: tech.units.indriya.format.TokenException: 
+|Multiple units
+|[`m·A·W·h`]
+|m·A·W·h
+|Parentheses
+|[`N(W·h)`]
+|java.lang.IllegalArgumentException: tech.units.indriya.format.TokenException: Encountered " "(" "( "" at line 1, column 2.
+Was expecting one of:
+    <EOF> 
+    "+" ...
+    "-" ...
+    "*" ...
+    "\u00b7" ...
+    "/" ...
+    "^" ...
+    ":" ...
+    <SUPERSCRIPT_INTEGER> ...
+    
 |Ohm
 |[`Ω`]
 |Ω
 |mOhm
 |[`mΩ`]
 |mΩ
-|Micro
+|Micro (0x00B5)
 |[`µV`]
 |μV
-|Ascii
+|Micro (0x03BC)
+|[`μV`]
+|java.lang.IllegalArgumentException: tech.units.indriya.format.TokenException: 
+|Ascii simple
+|[`Nm`]
+|java.lang.IllegalArgumentException: tech.units.indriya.format.TokenException: 
+|Ascii simple
 |[`N m`]
 |javax.measure.format.MeasurementParseException: tech.units.indriya.format.TokenMgrError: Lexical error at line 1, column 2.  Encountered: " " (32), after : ""
-|Ascii
+|Ascii symbol
 |[`Ohm`]
 |java.lang.IllegalArgumentException: tech.units.indriya.format.TokenException: 
-|Ascii
-|[`micro Ohm`]
+|Ascii prefix
+|[`microOhm`]
 |java.lang.IllegalArgumentException: tech.units.indriya.format.TokenException: 
 
 |===
 
+[[sect-unitformatters-ASCII]]
 === "ASCII"
 .Test results
 [options=header]
@@ -153,30 +209,43 @@
 |Leading 1
 |[`1/s`]
 |javax.measure.format.MeasurementParseException: unexpected token INTEGER
+|Leading 1 (fudge)
+|[`one/s`]
+|1/s
+|Multiple units
+|[`m·A·W·h`]
+|m·A·W·h
 |Parentheses
-|[`k(W·h)`]
-|javax.measure.format.MeasurementParseException: Parse Error
+|[`N(W·h)`]
+|javax.measure.format.MeasurementParseException: unexpected token OPEN_PAREN
 |Ohm
 |[`Ω`]
 |Ω
 |mOhm
 |[`mΩ`]
 |mΩ
-|Micro
+|Micro (0x00B5)
 |[`µV`]
 |μV
-|Ascii
+|Micro (0x03BC)
+|[`μV`]
+|μV
+|Ascii simple
+|[`Nm`]
+|javax.measure.format.MeasurementParseException: Parse Error
+|Ascii simple
 |[`N m`]
 |javax.measure.format.MeasurementParseException: unexpected token IDENTIFIER
-|Ascii
+|Ascii symbol
 |[`Ohm`]
 |Ω
-|Ascii
-|[`micro Ohm`]
-|javax.measure.format.MeasurementParseException: Parse Error
+|Ascii prefix
+|[`microOhm`]
+|μΩ
 
 |===
 
+[[sect-unitformatters-Default]]
 === "Default"
 .Test results
 [options=header]
@@ -209,36 +278,51 @@
 |Leading 1
 |[`1/s`]
 |javax.measure.format.MeasurementParseException: unexpected token INTEGER
+|Leading 1 (fudge)
+|[`one/s`]
+|1/s
+|Multiple units
+|[`m·A·W·h`]
+|m·A·W·h
 |Parentheses
-|[`k(W·h)`]
-|javax.measure.format.MeasurementParseException: Parse Error
+|[`N(W·h)`]
+|javax.measure.format.MeasurementParseException: unexpected token OPEN_PAREN
 |Ohm
 |[`Ω`]
 |Ω
 |mOhm
 |[`mΩ`]
 |mΩ
-|Micro
+|Micro (0x00B5)
 |[`µV`]
 |μV
-|Ascii
+|Micro (0x03BC)
+|[`μV`]
+|μV
+|Ascii simple
+|[`Nm`]
+|javax.measure.format.MeasurementParseException: Parse Error
+|Ascii simple
 |[`N m`]
 |javax.measure.format.MeasurementParseException: unexpected token IDENTIFIER
-|Ascii
+|Ascii symbol
 |[`Ohm`]
 |Ω
-|Ascii
-|[`micro Ohm`]
+|Ascii prefix
+|[`microOhm`]
 |javax.measure.format.MeasurementParseException: Parse Error
 
 |===
 
-== Quantity Formatters
-- "EBNF"
-- "Local"
-- "NumberDelimiter"
-- "Simple"
+[[sect-qtyformatters]]
 
+== Quantity Formatters
+- "xref:sect-qtyformatters-EBNF[EBNF]"
+- "xref:sect-qtyformatters-Local[Local]"
+- "xref:sect-qtyformatters-NumberDelimiter[NumberDelimiter]"
+- "xref:sect-qtyformatters-Simple[Simple]"
+
+[[sect-qtyformatters-EBNF]]
 === "EBNF"
 .Test results
 [options=header]
@@ -250,6 +334,18 @@
 |Simple
 |[`6 m`]
 |6 m
+|Extra space
+|[`6       m`]
+|javax.measure.UnconvertibleException: javax.measure.IncommensurableException: one is not compatible with m
+|Leading space
+|[`   6 m`]
+|java.lang.IllegalArgumentException: Number cannot be parsed
+|Trailing space
+|[`6 m  `]
+|6 m
+|Tab
+|[`6	m`]
+|java.lang.IllegalArgumentException: No Unit found
 |Extra space
 |[`6       m`]
 |javax.measure.UnconvertibleException: javax.measure.IncommensurableException: one is not compatible with m
@@ -280,6 +376,7 @@
 
 |===
 
+[[sect-qtyformatters-Local]]
 === "Local"
 .Test results
 [options=header]
@@ -291,6 +388,18 @@
 |Simple
 |[`6 m`]
 |6 m
+|Extra space
+|[`6       m`]
+|javax.measure.UnconvertibleException: javax.measure.IncommensurableException: one is not compatible with m
+|Leading space
+|[`   6 m`]
+|java.lang.IllegalArgumentException: Number cannot be parsed
+|Trailing space
+|[`6 m  `]
+|6 m
+|Tab
+|[`6	m`]
+|java.lang.IllegalArgumentException: No Unit found
 |Extra space
 |[`6       m`]
 |javax.measure.UnconvertibleException: javax.measure.IncommensurableException: one is not compatible with m
@@ -321,6 +430,7 @@
 
 |===
 
+[[sect-qtyformatters-NumberDelimiter]]
 === "NumberDelimiter"
 .Test results
 [options=header]
@@ -332,6 +442,18 @@
 |Simple
 |[`6 m`]
 |6 m
+|Extra space
+|[`6       m`]
+|javax.measure.UnconvertibleException: javax.measure.IncommensurableException: one is not compatible with m
+|Leading space
+|[`   6 m`]
+|java.lang.IllegalArgumentException: Number cannot be parsed
+|Trailing space
+|[`6 m  `]
+|6 m
+|Tab
+|[`6	m`]
+|java.lang.IllegalArgumentException: No Unit found
 |Extra space
 |[`6       m`]
 |javax.measure.UnconvertibleException: javax.measure.IncommensurableException: one is not compatible with m
@@ -362,6 +484,7 @@
 
 |===
 
+[[sect-qtyformatters-Simple]]
 === "Simple"
 .Test results
 [options=header]
@@ -372,6 +495,18 @@
 
 |Simple
 |[`6 m`]
+|6 m
+|Extra space
+|[`6       m`]
+|6 m
+|Leading space
+|[`   6 m`]
+|6 m
+|Trailing space
+|[`6 m  `]
+|6 m
+|Tab
+|[`6	m`]
 |6 m
 |Extra space
 |[`6       m`]
@@ -403,12 +538,9 @@
 
 |===
 
-== Systems of Units
-- Units
+== System Of Units: Units
 
-=== Units
-
-.Units provided by SystemOfUnits
+.Units provided by SystemOfUnits Units
 [options=header]
 |===
 |Name |Symbol |Dimension |Base units |System unit
@@ -860,6 +992,2292 @@
 == Quantity Factories
 Length: :tech.units.indriya.quantity.DefaultQuantityFactory <javax.measure.quantity.Length>
 
-Mass: :tech.units.indriya.quantity.DefaultQuantityFactory <javax.measure.quantity.Length>
+Mass: :tech.units.indriya.quantity.DefaultQuantityFactory <javax.measure.quantity.Mass>
 
 etc
+
+== Prefixes: Metric
+[options=header]
+|===
+|Name |Symbol |Exponent
+
+|YOTTA
+
+|Y
+
+|24
+
+|ZETTA
+
+|Z
+
+|21
+
+|EXA
+
+|E
+
+|18
+
+|PETA
+
+|P
+
+|15
+
+|TERA
+
+|T
+
+|12
+
+|GIGA
+
+|G
+
+|9
+
+|MEGA
+
+|M
+
+|6
+
+|KILO
+
+|k
+
+|3
+
+|HECTO
+
+|h
+
+|2
+
+|DEKA
+
+|da
+
+|1
+
+|DECI
+
+|d
+
+|-1
+
+|CENTI
+
+|c
+
+|-2
+
+|MILLI
+
+|m
+
+|-3
+
+|MICRO
+
+|µ
+
+|-6
+
+|NANO
+
+|n
+
+|-9
+
+|PICO
+
+|p
+
+|-12
+
+|FEMTO
+
+|f
+
+|-15
+
+|ATTO
+
+|a
+
+|-18
+
+|ZEPTO
+
+|z
+
+|-21
+
+|YOCTO
+
+|y
+
+|-24
+
+
+|===
+
+
+== Prefixes: Binary
+[options=header]
+|===
+|Name |Symbol |Exponent
+
+|KIBI
+
+|Ki
+
+|1
+
+|MEBI
+
+|Mi
+
+|2
+
+|GIBI
+
+|Gi
+
+|3
+
+|TEBI
+
+|Ti
+
+|4
+
+|PEBI
+
+|Pi
+
+|5
+
+|EXBI
+
+|Ei
+
+|6
+
+|ZEBI
+
+|Zi
+
+|7
+
+|YOBI
+
+|Yi
+
+|8
+
+
+|===
+
+
+
+[[appendix-spi-SI]]
+[appendix]
+= Service provider: SI
+[NOTE]
+Prefixes, QuantityFormat and UnitFormat are the same as Default.
+
+
+== System Of Units: Non-SI Units
+
+.Units provided by SystemOfUnits Non-SI Units
+[options=header]
+|===
+|Name |Symbol |Dimension |Base units |System unit
+
+|null
+
+|null
+
+|[Θ]
+
+|null
+
+|K
+
+|Unified atomic mass
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|Bohr Radius
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|Bar
+
+|null
+
+|[M]/([L]·[T]²)
+
+|{N=1, m=-2}
+
+|Pa
+
+|null
+
+|null
+
+|[L]/[T]²
+
+|{cm=1, s=-2}
+
+|m/s²
+
+|null
+
+|null
+
+|1/[T]
+
+|{s=-1}
+
+|Bq
+
+|null
+
+|null
+
+|[L]/[T]²
+
+|{m=1, s=-2}
+
+|m/s²
+
+|null
+
+|null
+
+|one
+
+|{}
+
+|rad
+
+|null
+
+|null
+
+|1/[T]
+
+|{s=-1}
+
+|Bq
+
+|Electron Volt
+
+|null
+
+|[L]²·[M]/[T]²
+
+|{N=1, m=1}
+
+|J
+
+|Knot
+
+|null
+
+|[L]/[T]
+
+|{nmi=1, h=-1}
+
+|m/s
+
+|null
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|null
+
+|null
+
+|[M]/([L]·[T])
+
+|{g=1, cm=-1, s=-1}
+
+|kg/(m·s)
+
+|null
+
+|null
+
+|[I]
+
+|{daA/4=1, one*3.141592653589793=1}
+
+|A
+
+|Ångström
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|null
+
+|null
+
+|[T]
+
+|null
+
+|s
+
+|Hectare
+
+|null
+
+|[L]²
+
+|{m=2}
+
+|m²
+
+|Rad
+
+|null
+
+|[L]²/[T]²
+
+|{J=1, kg=-1}
+
+|Gy
+
+|null
+
+|null
+
+|[L]²·[M]/[T]³
+
+|{J=1, s=-1}
+
+|W
+
+|null
+
+|null
+
+|[M]/([L]·[T]²)
+
+|{N=1, m=-2}
+
+|Pa
+
+|null
+
+|null
+
+|[L]²·[M]/([T]²·[I])
+
+|{V=1, s=1}
+
+|Wb
+
+|Oersted
+
+|null
+
+|[I]/[L]
+
+|{(A/m)*250=1, one*3.141592653589793=-1}
+
+|A/m
+
+|null
+
+|null
+
+|[T]·[I]
+
+|{s=1, A=1}
+
+|C
+
+|Nautical mile
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|null
+
+|null
+
+|[J]/[L]²
+
+|{cd=1, cm=-2}
+
+|cd/m²
+
+|null
+
+|null
+
+|[N]
+
+|null
+
+|mol
+
+|null
+
+|null
+
+|[L]²·[M]/[T]²
+
+|{N=1, m=1}
+
+|J
+
+|Roentgen
+
+|null
+
+|[T]·[I]/[M]
+
+|{C=1, kg=-1}
+
+|C/kg
+
+|null
+
+|null
+
+|[L]·[M]/[T]²
+
+|{m=1, kg=1, s=-2}
+
+|N
+
+|null
+
+|null
+
+|[T]
+
+|null
+
+|s
+
+|null
+
+|null
+
+|[T]
+
+|null
+
+|s
+
+|Astronomical Unit
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|Light year
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|null
+
+|null
+
+|[L]/[T]
+
+|{m=1, s=-1}
+
+|m/s
+
+|null
+
+|null
+
+|1/[T]
+
+|{s=-1}
+
+|1/s
+
+|null
+
+|null
+
+|[M]/([L]·[T]²)
+
+|{N=1, m=-2}
+
+|Pa
+
+|Second Angle
+
+|null
+
+|one
+
+|{}
+
+|rad
+
+|null
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|Bel
+
+|null
+
+|one
+
+|{}
+
+|one
+
+|Dyne
+
+|null
+
+|[L]·[M]/[T]²
+
+|{m=1, kg=1, s=-2}
+
+|N
+
+|null
+
+|null
+
+|[L]²/[T]
+
+|{cm=2, s=-1}
+
+|m²/s
+
+|null
+
+|null
+
+|one
+
+|{}
+
+|one
+
+|null
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|Dalton
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|null
+
+|null
+
+|one
+
+|{sr*4=1, one*3.141592653589793=1}
+
+|sr
+
+|Phot
+
+|null
+
+|[J]/[L]²
+
+|{lm=1, m=-2}
+
+|lx
+
+|null
+
+|null
+
+|[M]/([T]²·[I])
+
+|{Wb=1, m=-2}
+
+|T
+
+|Neper
+
+|null
+
+|one
+
+|{}
+
+|one
+
+|null
+
+|null
+
+|[T]
+
+|null
+
+|s
+
+|Minute Angle
+
+|null
+
+|one
+
+|{}
+
+|rad
+
+|null
+
+|null
+
+|[L]²
+
+|{fm=2}
+
+|m²
+
+|null
+
+|null
+
+|[T]·[I]
+
+|{s=1, A=1}
+
+|C
+
+|null
+
+|null
+
+|[L]²/[T]²
+
+|{J=1, kg=-1}
+
+|Sv
+
+|null
+
+|null
+
+|[J]/[L]²
+
+|{cd=1, cm=-2, one*3.141592653589793=-1}
+
+|cd/m²
+
+|Degree Angle
+
+|null
+
+|one
+
+|{}
+
+|rad
+
+|Tonne
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+
+|===
+
+
+== System Of Units: SI
+
+.Units provided by SystemOfUnits SI
+[options=header]
+|===
+|Name |Symbol |Dimension |Base units |System unit
+
+|Radian per second
+
+|null
+
+|1/[T]
+
+|{rad=1, s=-1}
+
+|rad/s
+
+|Unified atomic mass
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|null
+
+|null
+
+|[T]·[I]
+
+|{s=1, A=1}
+
+|C
+
+|null
+
+|At
+
+|[I]
+
+|null
+
+|At
+
+|null
+
+|null
+
+|[L]²·[M]/[T]³
+
+|{W=1, sr=-1}
+
+|W/sr
+
+|null
+
+|null
+
+|[L]²·[M]/[T]
+
+|{J=1, s=1}
+
+|J·s
+
+|null
+
+|null
+
+|[J]/[L]²
+
+|{cd=1, m=-2}
+
+|cd/m²
+
+|null
+
+|null
+
+|[L]²·[M]/[T]
+
+|{J=1, s=1}
+
+|J·s
+
+|null
+
+|null
+
+|[M]/[T]³
+
+|{W=1, m=-2}
+
+|W/m²
+
+|null
+
+|null
+
+|one
+
+|{}
+
+|rad
+
+|null
+
+|null
+
+|[L]²·[M]/([T]²·[Θ])
+
+|{J=1, K=-1}
+
+|J/K
+
+|null
+
+|null
+
+|[L]·[M]/([T]²·[I]²)
+
+|{N=1, A=-2}
+
+|N/A²
+
+|null
+
+|null
+
+|[T]·[I]/[M]
+
+|{C=1, kg=-1}
+
+|C/kg
+
+|null
+
+|null
+
+|1/[N]
+
+|{mol=-1}
+
+|m-1
+
+|null
+
+|ε
+
+|[T]^4·[I]²/([L]³·[M])
+
+|{F=1, m=-1}
+
+|ε
+
+|null
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|null
+
+|null
+
+|[M]/([L]·[T])
+
+|{Pa=1, s=1}
+
+|Pa·s
+
+|null
+
+|null
+
+|[L]²·[M]/[T]²
+
+|{N=1, m=1}
+
+|J
+
+|null
+
+|null
+
+|1/[L]
+
+|{m=-1}
+
+|1/m
+
+|null
+
+|null
+
+|[L]/[T]²
+
+|{m=1, s=-2}
+
+|m/s²
+
+|null
+
+|null
+
+|[L]²/[T]
+
+|{m=2, s=-1}
+
+|m²/s
+
+|null
+
+|null
+
+|[M]/[T]³
+
+|{W=1, sr=-1, m=-2}
+
+|W/(sr·m²)
+
+|null
+
+|null
+
+|[I]/[L]
+
+|{A=1, m=-1}
+
+|A/m
+
+|Radian per square second
+
+|null
+
+|1/[T]²
+
+|{rad=1, s=-2}
+
+|rad/s²
+
+
+|===
+
+
+== Quantity Factories
+Length: :tech.units.indriya.quantity.DefaultQuantityFactory <javax.measure.quantity.Length>
+
+Mass: :tech.units.indriya.quantity.DefaultQuantityFactory <javax.measure.quantity.Mass>
+
+etc
+
+
+[[appendix-spi-Common]]
+[appendix]
+= Service provider: Common
+[NOTE]
+QuantityFormat and UnitFormat are the same as Default.
+
+
+== System Of Units: United States Customary Units
+
+.Units provided by SystemOfUnits United States Customary Units
+[options=header]
+|===
+|Name |Symbol |Dimension |Base units |System unit
+
+|null
+
+|null
+
+|[Θ]
+
+|null
+
+|K
+
+|null
+
+|null
+
+|[T]
+
+|null
+
+|s
+
+|null
+
+|null
+
+|[L]³
+
+|{in=3}
+
+|㎥
+
+|Cup
+
+|null
+
+|[L]³
+
+|{in=3}
+
+|㎥
+
+|null
+
+|null
+
+|one
+
+|{}
+
+|rad
+
+|Liter
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|null
+
+|null
+
+|one
+
+|{}
+
+|rad
+
+|Acre-foot
+
+|null
+
+|[L]³
+
+|{in=3}
+
+|㎥
+
+|Metre
+
+|m
+
+|[L]
+
+|null
+
+|m
+
+|null
+
+|null
+
+|[L]²
+
+|{ft=2}
+
+|m²
+
+|null
+
+|null
+
+|one
+
+|{}
+
+|rad
+
+|Liquid Gill
+
+|null
+
+|[L]³
+
+|{in=3}
+
+|㎥
+
+|Light year
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|null
+
+|null
+
+|[Θ]
+
+|null
+
+|K
+
+|Tablespoon
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|Barrel
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|Hectare
+
+|null
+
+|[L]²
+
+|{m=2}
+
+|m²
+
+|Minim
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|Teaspoon
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|Foot
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|Acre
+
+|null
+
+|[L]²
+
+|{ft=2}
+
+|m²
+
+|Pint
+
+|null
+
+|[L]³
+
+|{in=3}
+
+|㎥
+
+|Fluid Ounze
+
+|null
+
+|[L]³
+
+|{in=3}
+
+|㎥
+
+|Yard
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|Pound
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|US Survey foot
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|Mile per hour
+
+|null
+
+|[L]/[T]
+
+|{mi=1, min*60=-1}
+
+|m/s
+
+|null
+
+|null
+
+|[L]³
+
+|{in=3}
+
+|㎥
+
+|Horsepower
+
+|null
+
+|[L]²·[M]/[T]³
+
+|{J=1, s=-1}
+
+|W
+
+|null
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|null
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|Fluid dram
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|null
+
+|null
+
+|one
+
+|{}
+
+|rad
+
+|Are
+
+|null
+
+|[L]²
+
+|{m=2}
+
+|m²
+
+|Mile
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|null
+
+|null
+
+|one
+
+|{}
+
+|rad
+
+|US gallon
+
+|null
+
+|[L]³
+
+|{in=3}
+
+|㎥
+
+|Nautical mile
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|null
+
+|null
+
+|[T]
+
+|null
+
+|s
+
+|null
+
+|null
+
+|[L]/[T]
+
+|{ft=1, s=-1}
+
+|m/s
+
+|US dry gallon
+
+|null
+
+|[L]³
+
+|{in=3}
+
+|㎥
+
+|Knot
+
+|null
+
+|[L]/[T]
+
+|{nmi=1, min*60=-1}
+
+|m/s
+
+|null
+
+|null
+
+|one
+
+|{}
+
+|rad
+
+|Inch
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|Electron Volt
+
+|null
+
+|[L]²·[M]/[T]²
+
+|{N=1, m=1}
+
+|J
+
+
+|===
+
+
+== System Of Units: Imperial
+
+.Units provided by SystemOfUnits Imperial
+[options=header]
+|===
+|Name |Symbol |Dimension |Base units |System unit
+
+|null
+
+|null
+
+|[Θ]
+
+|null
+
+|K
+
+|Quart
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|null
+
+|null
+
+|[T]
+
+|null
+
+|s
+
+|Acre
+
+|null
+
+|[L]²
+
+|{ft=2}
+
+|m²
+
+|Cubic Inch
+
+|null
+
+|[L]³
+
+|{in=3}
+
+|㎥
+
+|Gill
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|null
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|null
+
+|null
+
+|[L]·[M]/[T]²
+
+|{m=1, kg=1, s=-2}
+
+|N
+
+|Pound
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|null
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|null
+
+|null
+
+|[L]²
+
+|{ft=2}
+
+|m²
+
+|null
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|null
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|null
+
+|null
+
+|[Θ]
+
+|null
+
+|K
+
+|null
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|null
+
+|null
+
+|[T]
+
+|null
+
+|s
+
+|null
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|null
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|Inch
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|null
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|Pint
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|Minim
+
+|null
+
+|[L]³
+
+|{m=3}
+
+|㎥
+
+|null
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|null
+
+|null
+
+|[L]·[M]/[T]²
+
+|{m=1, kg=1, s=-2}
+
+|N
+
+
+|===
+
+
+== System Of Units: Centimetre–gram–second System of Units
+
+.Units provided by SystemOfUnits Centimetre–gram–second System of Units
+[options=header]
+|===
+|Name |Symbol |Dimension |Base units |System unit
+
+|null
+
+|null
+
+|[M]
+
+|null
+
+|kg
+
+|Kayser
+
+|null
+
+|1/[L]
+
+|{cm=-1}
+
+|1/m
+
+|Gal
+
+|null
+
+|[L]/[T]²
+
+|{cm=1, s=-2}
+
+|m/s²
+
+|Dyne
+
+|null
+
+|[L]·[M]/[T]²
+
+|{m=1, kg=1, s=-2}
+
+|N
+
+|Stokes
+
+|null
+
+|[L]²/[T]
+
+|{cm=2, s=-1}
+
+|m²/s
+
+|null
+
+|null
+
+|[L]
+
+|null
+
+|m
+
+|Erg
+
+|null
+
+|[L]²·[M]/[T]²
+
+|{N=1, m=1}
+
+|J
+
+|Erg per second
+
+|null
+
+|[L]²·[M]/[T]³
+
+|{erg=1, s=-1}
+
+|J/s
+
+|centimetre per second
+
+|null
+
+|[L]/[T]
+
+|{cm=1, s=-1}
+
+|m/s
+
+|Barye
+
+|null
+
+|[M]/([L]·[T]²)
+
+|{N=1, m=-2}
+
+|Pa
+
+|Poise
+
+|null
+
+|[M]/([L]·[T])
+
+|{g=1, cm=-1, s=-1}
+
+|kg/(m·s)
+
+|Second
+
+|s
+
+|[T]
+
+|null
+
+|s
+
+
+|===
+
+
+== Quantity Factories
+Length: :tech.units.indriya.quantity.DefaultQuantityFactory <javax.measure.quantity.Length>
+
+Mass: :tech.units.indriya.quantity.DefaultQuantityFactory <javax.measure.quantity.Mass>
+
+etc
+
+== Prefixes: Indian
+[options=header]
+|===
+|Name |Symbol |Exponent
+
+|EK
+
+|E
+
+|1
+
+|DAS
+
+|D
+
+|1
+
+|SAU
+
+|S
+
+|2
+
+|SAHASR
+
+|SA
+
+|3
+
+|LAKH
+
+|Lk
+
+|5
+
+|CRORE
+
+|cr
+
+|7
+
+|ARAWB
+
+|A
+
+|9
+
+|KHARAWB
+
+|K
+
+|11
+
+|NEEL
+
+|N
+
+|13
+
+|PADMA
+
+|Pa
+
+|15
+
+|SHANKH
+
+|SH
+
+|17
+
+|MAHASHANKH
+
+|M
+
+|19
+
+
+|===
+
+
+== Prefixes: Tamil
+[options=header]
+|===
+|Name |Symbol |Exponent
+
+|PATU
+
+|P
+
+|1
+
+|nūru
+
+|S
+
+|2
+
+|āyiram
+
+|SA
+
+|3
+
+|pattāyiram
+
+|Lk
+
+|4
+
+|nūraiyiram
+
+|Cr
+
+|5
+
+|meiyyiram
+
+|A
+
+|6
+
+|tollun
+
+|K
+
+|9
+
+|īkiyam
+
+|N
+
+|12
+
+|neļai
+
+|Pa
+
+|15
+
+|iļañci
+
+|SH
+
+|18
+
+|veļļam
+
+|M
+
+|20
+
+|āmpal
+
+|M
+
+|21
+
+
+|===
+
+
+== Prefixes: IndianAncient
+[options=header]
+|===
+|Name |Symbol |Exponent
+
+|EK
+
+|E
+
+|1
+
+|DAS
+
+|D
+
+|1
+
+|SAU
+
+|S
+
+|2
+
+|SAHASR
+
+|SA
+
+|3
+
+|LAKH
+
+|Lk
+
+|5
+
+|CRORE
+
+|cr
+
+|7
+
+|ARAWB
+
+|A
+
+|9
+
+|KHARAWB
+
+|K
+
+|11
+
+|NEEL
+
+|N
+
+|13
+
+|PADMA
+
+|Pa
+
+|15
+
+|SHANKH
+
+|SH
+
+|17
+
+|MAHASHANKH
+
+|M
+
+|19
+
+
+|===
+
+
+== Prefixes: TamilAncient
+[options=header]
+|===
+|Name |Symbol |Exponent
+
+|PATU
+
+|P
+
+|1
+
+|nūru
+
+|S
+
+|2
+
+|āyiram
+
+|SA
+
+|3
+
+|pattāyiram
+
+|Lk
+
+|4
+
+|nūraiyiram
+
+|Cr
+
+|5
+
+|meiyyiram
+
+|A
+
+|6
+
+|tollun
+
+|K
+
+|9
+
+|īkiyam
+
+|N
+
+|12
+
+|neļai
+
+|Pa
+
+|15
+
+|iļañci
+
+|SH
+
+|18
+
+|veļļam
+
+|M
+
+|20
+
+|āmpal
+
+|M
+
+|21
+
+
+|===
+
+
+== Prefixes: Verdic
+[options=header]
+|===
+|Name |Symbol |Exponent
+
+|PATU
+
+|P
+
+|1
+
+|nūru
+
+|S
+
+|2
+
+|āyiram
+
+|SA
+
+|3
+
+|pattāyiram
+
+|Lk
+
+|4
+
+|nūraiyiram
+
+|Cr
+
+|5
+
+|meiyyiram
+
+|A
+
+|6
+
+|tollun
+
+|K
+
+|9
+
+|īkiyam
+
+|N
+
+|12
+
+|neļai
+
+|Pa
+
+|15
+
+|iļañci
+
+|SH
+
+|18
+
+|veļļam
+
+|M
+
+|20
+
+|āmpal
+
+|M
+
+|21
+
+
+|===
+

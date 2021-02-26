@@ -21,21 +21,23 @@ For completeness, the ways to create new Quantities are:
   The normal way to create a Quantity from primitives, as illustrated above.
 
 Arithmetic::
-  Because Quantitys are immutable, arithmetic operations and converters also result in new Quantity objects.
+  Because Quantitys are immutable, arithmetic operations result in new Quantity objects. (xref:sect-arithmetic[])
+
+Conversion::
+  Because Quantitys are immutable, converters also result in new Quantity objects. (xref:sect-convertingquanties[])
 
 Parsing strings::
-  See xref:sect-parsing[].
-This is normally only used when reading external input.
+  This is normally only used when reading external input. (xref:sect-parsing[])
 
-Other library factories::
-  TBD
+QuantityFactories::
+  TBD (xref:sect-aspartofjsr[])
 
 (De-)Serialisation::
-  Yes
+  Yes (xref:sect-serialisation[])
 
 === Methods
 
-arithmetic - see xref:sect-arithmetic[]
+Arithmetic operations - see xref:sect-arithmetic[]
 
 `getScale()`::
   Is the unit relative (like CELSIUS)?
@@ -43,11 +45,11 @@ Can't think of a user application for this.
 
 `toSystemUnit()`:
   Shorthand for `q.to(q.getSystemUnit())`:
-Useful for converting to the base unit before using the primitive value (xref:sect-performance[]).
+Can't think of a user application for this.
 
 === Utilty classes
 
-Although they are not required by JSR-385, {product} contains several application classes based on Quantity:
+Although they are not part of JSR-385, {product} contains several application classes based on Quantity:
 
 QuantityRange::
   Has low and high Quantitys, with a single method `contains(final Quantity<Q> q)`.
@@ -59,3 +61,4 @@ See xref:{javadoc}/quantity/CompoundQuantity.html[javadoc] for details.
 
 - Should this be MixedQuantity?
 
+- I can't parse this.

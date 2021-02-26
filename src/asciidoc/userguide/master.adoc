@@ -69,14 +69,16 @@ include::sect-puttingittogether.adoc[]
 == Parsing and formatting
 
 In JSR-265, the same class is responsible for both parsing and formatting, to maintain consistency.
-Never the less it is convenient to describe them separately.
+But it is convenient to describe parsing and formatting separately.
 
 `UnitFormat` classes are responsible for converting units to and from String forms.
 
 `QuantityFormat` classes do the same for Quantitys.
 
-There is a variety of class available to encompass just about any format you might need; but only `SimpleUnitFormat` and `SimpleQuantityFormat` are provided in {product}.
+`SimpleUnitFormat` and `SimpleQuantityFormat` are the easiest to access and most complete, so will be described here.
 These provide formatters for SI units only.
+
+For a description of the other formatters, see xref:appendix-spi[].
 
 include::sect-parsing.adoc[leveloffset=+1]
 
@@ -96,5 +98,6 @@ include::sect-errormessages.adoc[]
 
 include::appendix-predefinedunits.adoc[]
 
+[[appendix-spi]]
 [appendix]
 include::spi.adoc[leveloffset=+1]

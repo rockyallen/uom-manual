@@ -30,6 +30,7 @@ import static tech.units.indriya.quantity.Quantities.*;
 import tech.units.indriya.unit.AlternateUnit;
 import tech.units.indriya.unit.Units;
 import static tech.units.indriya.unit.Units.*;
+import uom.bm.ObjectSizeFetcher;
 
 /**
  *
@@ -330,9 +331,25 @@ public class UnitsTest {
         byte[] bytes = SerialisationHelper.tobytes(instance);
 
         System.out.println("Size=" + bytes.length);
-        assertEquals(21 * sample + 1361, bytes.length);
+        assertEquals(21 * sample + 10355, bytes.length);
 
         ComparableQuantity[] result = SerialisationHelper.frombytes(bytes, instance.getClass());
         assertEquals(instance[30], result[30]);
     }
+    
+        public void size() {
+//        showSize(Double.valueOf(12345.6));
+//        showSize(BigDecimal.valueOf(12345.6));
+//        showSize(KILO_WATT);
+//        showSize(KELVIN);
+//        showSize(getQuantity(5.2, WATT));
+//        showSize(getQuantity(3.4, KILO_WATT));
+    }
+
+    public void showSize(Object obj) {
+
+        System.out.println(obj.getClass() + " " + obj.toString() + " = " + ObjectSizeFetcher.getObjectSize(obj));
+    }
+
+
 }

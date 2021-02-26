@@ -57,7 +57,7 @@ import static tech.units.indriya.unit.Units.SECOND;
 import static tech.units.indriya.unit.Units.SQUARE_METRE;
 import static tech.units.indriya.unit.Units.VOLT;
 import static tech.units.indriya.unit.Units.WATT;
-import uom.bm.ObjectSizeFetcher;
+//import uom.bm.ObjectSizeFetcher;
 //end::import[]
 
 public class Examples {
@@ -119,7 +119,7 @@ public class Examples {
         System.out.println("\ncomparable()");
         comparable();
         System.out.println("\nSIZE()");
-        size();
+//        size();
         System.out.println("\ntemperatureSums()");
         temperatureSums();
         System.out.println("\ntext()");
@@ -316,7 +316,7 @@ public class Examples {
 
     public void si() {
         System.out.println("\n\nSI:");
-        list(Units.getInstance());
+//        list(Units.getInstance());
         System.out.println("\n\nImperial:");
         //list(systems.uom.ucum.UCUM.getInstance()); 
 
@@ -370,20 +370,6 @@ public class Examples {
         System.out.println(q2.compareTo(q4)); // -1
         //System.out.println(q2.compareTo(q5)); // Compile time error: Incompatibe types        
         // end::comparable[]
-    }
-
-    public void size() {
-//        showSize(Double.valueOf(12345.6));
-//        showSize(BigDecimal.valueOf(12345.6));
-//        showSize(KILO_WATT);
-//        showSize(KELVIN);
-//        showSize(getQuantity(5.2, WATT));
-//        showSize(getQuantity(3.4, KILO_WATT));
-    }
-
-    public void showSize(Object obj) {
-
-        System.out.println(obj.getClass() + " " + obj.toString() + " = " + ObjectSizeFetcher.getObjectSize(obj));
     }
 
     public void temperatureSums() {

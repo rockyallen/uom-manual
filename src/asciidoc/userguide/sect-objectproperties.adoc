@@ -89,6 +89,7 @@ The test used in the comparator for "the same" is `isEquivalentTo()` but the `eq
 Equals is therefore not consistent with Comparable, and the general contract for Collections will be broken if you use Quantities in Sets.
 (ref Bloch item X)
 
+[[sect-serialisation]]
 === Serialisation
 
 ==== Using +java.io.Serializable+

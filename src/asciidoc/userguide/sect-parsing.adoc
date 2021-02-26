@@ -5,7 +5,7 @@
 `SimpleQuantityFormat` can interpret decimal numbers, rational numbers, unit symbols, compound units and SI prefixes.footnote:[According to the Javadocs, the parser should be configurable for the number-unit separator and the multiple-radix separators, but I can't get it to work. The default <number><space>(prefix)<unit> works OK, so this is all I will describe until I work out what is going on.]
 (`SimpleQuantityFormat` contains a `SimpleUnitFormat` so this description covers `SimpleUnitFormat` as well).
 
-For example:
+Typical usage is:
 
 [source,java,indent=2]
 ----
@@ -67,7 +67,6 @@ For example:
 |27.6 BMI
 |27.6 BMI
 
-
 |===
 
 *Notes*
@@ -82,7 +81,7 @@ For example:
 
 5. In all cases, the output can be toString()ed and reparsed, and the result is equal and equivalent to the first parse result.
 
-6. Defined with `label()` xref:?
+6. Is an alias different from a label?
 
 7. If you have registered them with the parser (xref:sect-creatingnewunits[])
 
@@ -90,10 +89,9 @@ For example:
 .Unicode characters for unit symbols
 [source,java,indent=2]
 ----
-include::{basedir}/src/main/java/Examples.java[tag="unicode"]
+include::{basedir}/src/main/java/DescribeSpi.java[tag="unicode"]
 ----
 
 If a particular string will not parse, try creating it using `getQuantity()` then compare the string with the `quantity.toString()` output.
-
-See xref:sect-puttingittogether[] for more details.
+You may need to use one of the other parser provided - see xref:sect-spi[], xref:sect-unitformatters[] and xref:sect-qtyformatters[].
 

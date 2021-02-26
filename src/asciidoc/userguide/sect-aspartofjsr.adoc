@@ -2,32 +2,33 @@
 [[sect-aspartofjsr]]
 == {product} as part of JSR-365
 
-////
-- I was trying to avoid all the SPI stuff and just treat {product} as a library because it seems really complex and possibly difficult to set up.
-But it may be the only way to do things like use other parsers and other systems of units.
-In which case it may have to be moved up to the getting started section.
-////
-
-Obtaining Unit Instances
-Unit instances can be obtained in a number of
-
 {product} is one implementation of JSR-365, and provides a comprehensive set of classes for dealing with SI units. 
 However it does not provide non-SI units or complex formatting.
-To get these facilities you can use the service provided interface contained in the JSR-365 core library.
+To get these facilities you can use the service provider mechanism contained in the JSR-365 core library.
 
 === Service Provider
-ServiceProvider is the only class (other than exceptions or enums) in JSR 385. It is an abstract base class for
-service providers defined by implementations and extension modules on top of them. ServiceProvider.current()
-provides the currently loaded ServiceProvider instance discovered with the highest priority.
-ServiceProvider.available() returns a list of all ServiceProvider instances found in the current classloader(s). The
-default mechanism is based on the java.util.ServiceLoader class.
+//ServiceProvider is the only class (other than exceptions or enums) in JSR 385. It is an abstract base class for
+//service providers defined by implementations and extension modules on top of them. 
+//provides the currently loaded ServiceProvider instance discovered with the highest priority.
+
+The ServiceProvider mechanism is based on the `java.util.ServiceLoader` class (link).
+
+ServiceProvider.available() returns a list of all ServiceProvider instances found in the current classloader(s). 
+
+ServiceProvider.current() returns the one with the highest priority.
+
+ServiceProvider.of(name) returns the named ServiceProvider.
+
+////
 by calling ServiceProvider.setCurrent() implementations or 3rd party modules may chose a different
 mechanism, either OSGi, a Dependency Injection framework or other service loading techniques like Java
 ME LIBlets [MEEP8_OPTIONAL] as well as Java 9 [JIGSAW].
 By ordering the registered instances along the priority (the most significant first), it is also possible to
 override partial aspects, as the first non null provider is returned by the call.
 Services
-The following services are available via ServiceProvider:
+////
+
+The following services are available from a ServiceProvider:
 
 - FormatService to retrieve different UnitFormat or QuantityFormat implementations defined by the
 implementation in use or 3rd party libraries.
@@ -37,19 +38,62 @@ by either the implementation of choice or 3rd party unit system libraries. Becau
 implementations like the MetricPrefix (part of the RI) are often tied to a particular SystemOfUnits we
 considered it a good choice combining access to both in SystemOfUnitsService.
 
-For example, you can obtain other formatters by name:
+The classes that can be obtained through the service provider are:
+
+  - UnitFormat
+
+  - QuantityFormat
+
+  - SystemOFUnits
+
+  - Prefix
+
+  - QuantityFactory
+
+In each case there is a default class, or you can obtain classes by name.
+
+You can mix and match classes from different service providers, or keep to just one.
 
 .Service Provider Interface
 [source, java]
 ----
-// Get the service
+// Defaults:
+
 FormatService formatService = ServiceProvider.current().getFormatService();
 
-// Get the default formatter
-QuantityFormat format = formatService.getQuantityFormat();
+QuantityFormat qFormat = formatService.getQuantityFormat();
 
-// Get a named formatter
-QuantityFormat nsFormat = formatService.getQuantityFormat(“NumberSpace”);
+UnitFormat uFormat = formatService.getUnitFormat();
+
+...
+
+// Or mix and match by name:
+
+QuantityFormat qFormat = ServiceProvider.of("otherImplementation").getFormatService().getQuantityFormat("NumberSpace");
+
+UnitFormat arabicFormat = ServiceProvider.of("anotherImplementation").getFormatService().getUnitFormat("arabic");
+
+UnitFormat frenchFormat = ServiceProvider.of("anotherImplementation").getFormatService().getUnitFormat("french");
+
+SystemOfUnits imperial = ServiceProvider.of("otherImplementation").getSystemOfUnitsService().getSystemOfUnits("imperial");
+
+Set<MetricPrefix> metricPf = ServiceProvider.of("otherImplementation").getSystemOfUnitsService().getPrefixes(MetricPrefix.class);
+
+QuantityFactory qfLength = ServiceProvider.of("otherImplementation").getQuantityFactory(Length.class);
+
+QuantityFactory qfMass = ServiceProvider.of("otherImplementation").getQuantityFactory(Mass.class);
+
+...
+
 ----
 
+{product} contains just 1 service provider with the classes documented in xref:appendix-spi[].
 
+Use of the UnitFormat and QuantityFormat classes has already been described.
+
+SystemOfUnits is a container for a set of consistent units, such as cgs, SI or Imperial.
+It has methods to list the units and retrieve them by name.
+
+QuantityFactory has a create((Number,Unit) method corresponding to the Quantities.getQuantity(Number,Unit) ???????
+
+Do a side-by-side comparison of getQuantity() and create, including how to get the unit.
