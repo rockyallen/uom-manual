@@ -3,8 +3,6 @@
 [appendix]
 == List of Predefined Units
 
-// - I think that Imperialunits are in systems.uom.ucum.UCUM in systems-common.jar but I get class not found: MeasurementError when I include it
-
 These SI units are available in package `tech.units.indriya.unit.Units`.
 Units that are required by the JSR have the Unit constant in CAPITALS.
 Unit constants in lower case are provided in {product} but may not exist in other implementations.

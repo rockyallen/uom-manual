@@ -28,6 +28,7 @@ override partial aspects, as the first non null provider is returned by the call
 Services
 ////
 
+////
 The following services are available from a ServiceProvider:
 
 - FormatService to retrieve different UnitFormat or QuantityFormat implementations defined by the
@@ -37,6 +38,7 @@ implementation in use or 3rd party libraries.
 by either the implementation of choice or 3rd party unit system libraries. Because Prefix
 implementations like the MetricPrefix (part of the RI) are often tied to a particular SystemOfUnits we
 considered it a good choice combining access to both in SystemOfUnitsService.
+////
 
 The classes that can be obtained through the service provider are:
 
@@ -87,13 +89,41 @@ QuantityFactory qfMass = ServiceProvider.of("otherImplementation").getQuantityFa
 
 ----
 
-{product} contains just 1 service provider with the classes documented in xref:appendix-spi[].
+{product} contains several service providers as documented in xref:appendix-spi[].
+
+=== Adding to your project
+
+Service providers will be automatically recognised if they are on the class path:
+
+[source,xml]
+----
+include::{basedir}/pom.xml[tags="fulldependency"]
+----
+ 
+=== Listing services
+
+This code fragment will list the classes available:
+
+[source,java,indent=2]
+----
+include::{basedir}/src/main/java/DescribeSpi.java[tag="listthem"]
+----
+
+=== Using the formatters
 
 Use of the UnitFormat and QuantityFormat classes has already been described.
+Because they are known only by their Interface, it is not possible to configure them.
 
-SystemOfUnits is a container for a set of consistent units, such as cgs, SI or Imperial.
-It has methods to list the units and retrieve them by name.
+=== Obtaining units
+
+TBD
+
+=== Creating Quantitys
 
 QuantityFactory has a create((Number,Unit) method corresponding to the Quantities.getQuantity(Number,Unit) ???????
 
-Do a side-by-side comparison of getQuantity() and create, including how to get the unit.
+//SystemOfUnits is a container for a set of consistent units, such as cgs, SI or Imperial.
+//It has methods to list the units and retrieve them by name.
+
+
+//Do a side-by-side comparison of getQuantity() and create, including how to get the unit?

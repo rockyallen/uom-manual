@@ -12,7 +12,7 @@ Assuming you have a working POM file, all you should need to do is to add the fo
 
 [source,xml]
 ----
-include::{basedir}/pom.xml[tag="dependency"]
+include::{basedir}/pom.xml[tags="dependency"]
 ----
 
 === Your First Quantity

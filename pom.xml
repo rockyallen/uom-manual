@@ -7,6 +7,7 @@
     <packaging>jar</packaging>
     <dependencies>
         
+        <!-- tag::fulldependency[] -->
         <!-- tag::dependency[] -->
         <dependency>
             <groupId>tech.units</groupId>
@@ -41,6 +42,7 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency> 
+        <!-- end::fulldependency[] -->
                
         <!-- POMs don't seem to work in NetBeans Maven. Load them directly. -->
         <!-- https://bintray.com/asciidoctor/maven/asciidoctorj-api/view/general -->

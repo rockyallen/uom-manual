@@ -137,7 +137,8 @@ public class Examples {
         System.out.println("\ntestManyRadix()");
         testManyRadix();
         System.out.println("\ntestSpi()");
-        new DescribeSpi().testSpi();
+        new DescribeSpi().documentSpi();
+        new DescribeSpi().listSpis();
     }
 
 // tag::useCentripetalForce[]

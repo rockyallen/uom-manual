@@ -60,7 +60,7 @@ public class DescribeSpi {
 
     final File fout = new File("src/asciidoc/userguide/spi.adoc");
 
-    public void testSpi() throws IOException {
+    public void documentSpi() throws IOException {
         sb = new StringBuilder();
         // List the available prodiders
         for (ServiceProvider sp : ServiceProvider.available()) {
@@ -70,7 +70,6 @@ public class DescribeSpi {
         }
 
 // =====================================================
-
         ServiceProvider sp = ServiceProvider.of("Default");
 
         describeServiceProviderHead(sp);
@@ -85,11 +84,10 @@ public class DescribeSpi {
 
         //sb.append("\n== Prefixes\n\n");
         describePrefixes(sp, "Metric", MetricPrefix.class);
-        
+
         describePrefixes(sp, "Binary", BinaryPrefix.class);
 
 // =====================================================
-
         sp = ServiceProvider.of("SI");
 
         describeServiceProviderHead(sp);
@@ -102,7 +100,6 @@ public class DescribeSpi {
         describeFactories(sp);
 
 // =====================================================
-
         sp = ServiceProvider.of("Common");
         describeServiceProviderHead(sp);
 
@@ -115,17 +112,16 @@ public class DescribeSpi {
 
         // sb.append("\n== Prefixes\n\n");
         describePrefixes(sp, "Indian", IndianPrefix.class);
-        
+
         describePrefixes(sp, "Tamil", TamilAncientPrefix.class);
-        
+
         describePrefixes(sp, "IndianAncient", IndianPrefix.class);
-        
+
         describePrefixes(sp, "TamilAncient", TamilAncientPrefix.class);
-        
+
         describePrefixes(sp, "Verdic", TamilAncientPrefix.class);
 
 // =====================================================
-
         BufferedWriter w = new BufferedWriter(new FileWriter(fout));
         w.append(sb);
         w.close();
@@ -137,7 +133,6 @@ public class DescribeSpi {
     private void describeServiceProviderHead(ServiceProvider sp) {
 
         //System.out.println("Describing SP " + sp.toString());
-
         sb.append("\n\n[[appendix-spi-" + sp + "]]").append("\n");
         sb.append("[appendix]").append("\n");
         sb.append("= Service provider: ").append(sp).append("\n");
@@ -361,4 +356,39 @@ public class DescribeSpi {
             sb.append("\n|" + eParse);
         }
     }
+
+    /**
+     * List the available providers and their services
+     *
+     */
+    // tag::listthem[]
+    public void listSpis() {
+        StringBuilder sb = new StringBuilder();
+        for (ServiceProvider sp : ServiceProvider.available()) {
+            {
+                sb.append("\nServiceProvider: " + sp).append("\n");
+                for (SystemOfUnits sou : sp.getSystemOfUnitsService().getAvailableSystemsOfUnits()) {
+                    sb.append("  SystemsOfUnits: [" + sou.getName() + "]");
+                    for (Unit s : sou.getUnits()) {
+                        sb.append(" [" + s.toString() + "]");
+                    }
+                    sb.append("\n");;
+                    sb.append("  Quantity Formatters: ");
+                    FormatService formatService = sp.getFormatService();
+                    for (String s : formatService.getAvailableFormatNames(FormatService.FormatType.QUANTITY_FORMAT)) {
+                        sb.append(" [").append(s).append("]");
+                    }
+                    sb.append("\n");
+                    sb.append("  Unit Formatters: ");
+                    for (String s : formatService.getAvailableFormatNames(FormatService.FormatType.UNIT_FORMAT)) {
+                        sb.append(" [").append(s).append("]");
+                    }
+                    sb.append("\n");
+                    sb.append("  Prefixes: NOT DISCOVERABLE???\n");
+                }
+            }
+        }
+        System.out.print(sb.toString());
+    }
+    // end::listthem[]
 }

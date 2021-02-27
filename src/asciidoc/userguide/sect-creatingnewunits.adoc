@@ -1,6 +1,6 @@
 
 [[sect-creatingnewunits]]
-== Creating new Units
+== Defining new Units
 
 ////
 - Why?
@@ -16,6 +16,21 @@
 - Can I create new Quantity Types?
 
 - Lots of examples
+
+Things I don't understand:
+
+- Locale?
+
+- Is label() the same as an alias?
+
+- If not how do I make aliases?
+
+- Scale?
+
+- Given the complexities of the methods, is it better to recommend parsing?
+
+- How does this work with ServiceProvider? Do I have to get the formatter first, then use label, or do all SPs share a common database of units?
+
 ////
 
 There are several methods for creating derived units, each with its own uses and advantages:
@@ -99,11 +114,13 @@ TBD
 
 === Register the new unit with the parser
 
- defined your own units, the parser can be extended to include them by:
+When you have defined your new unit, let the parser know about it by:
 
 .Registering a unit symbol
 [source,java,indent=2]
 ----
 include::{basedir}/src/main/java/Examples.java[tag="extendparser"]
-----
 
+TBD
+
+----
